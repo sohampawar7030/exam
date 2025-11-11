@@ -18,7 +18,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // SVG Icons
+        // SVG Icons (unchanged)
         const Upload = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>);
         const CheckCircle = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>);
         const XCircle = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>);
@@ -43,7 +43,7 @@
         const Edit = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>);
         const Star = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>);
 
-        // AWS Cloud Practitioner Exam Domains
+        // AWS Cloud Practitioner Exam Domains (unchanged)
         const AWS_DOMAINS = {
             'Cloud Concepts': {
                 keywords: ['cloud', 'benefits', 'economics', 'scalability', 'elasticity', 'agility', 'reliability', 'global infrastructure'],
@@ -102,11 +102,11 @@
             const [showCreateExam, setShowCreateExam] = useState(false);
             const [newExam, setNewExam] = useState({ title: '', duration: 150, questions: [], answers: [] });
 
-            // Categorize questions by AWS domains
+            // Categorize questions by AWS domains (unchanged)
             const categorizeQuestion = (questionText) => {
                 const text = questionText.toLowerCase();
                 let bestMatch = { domain: 'General', score: 0 };
-                
+
                 Object.entries(AWS_DOMAINS).forEach(([domain, data]) => {
                     let score = 0;
                     data.keywords.forEach(keyword => {
@@ -118,14 +118,14 @@
                         bestMatch = { domain, score };
                     }
                 });
-                
+
                 return bestMatch.score > 0 ? bestMatch.domain : 'General';
             };
 
-            // Analyze topic performance
+            // Analyze topic performance (unchanged)
             const analyzeTopics = () => {
                 const topicPerformance = {};
-                
+
                 // Initialize domains
                 Object.keys(AWS_DOMAINS).forEach(domain => {
                     topicPerformance[domain] = {
@@ -147,7 +147,7 @@
                     const domain = categorizeQuestion(question.question);
                     const userAnswer = (userAnswers[idx] || '').trim();
                     const correctAnswer = (answers[idx] || '').trim();
-                    
+
                     const normalizedUserAnswer = userAnswer.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
                     const normalizedCorrectAnswer = correctAnswer.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
                     const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
@@ -178,7 +178,7 @@
                 return topicPerformance;
             };
 
-            // Get weak and strong topics
+            // Get weak and strong topics (unchanged)
             const getWeakStrongTopics = (analysis) => {
                 const topics = Object.entries(analysis)
                     .filter(([domain, data]) => data.total > 0)
@@ -235,34 +235,67 @@
                 return hours > 0 ? `${hours}:${remainingMins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}` : `${mins}:${secs.toString().padStart(2, '0')}`;
             };
 
+            // FIXED: Improved question parsing to handle various formats
             const parseQuestionBank = (text) => {
                 const lines = text.split('\n').filter(line => line.trim());
                 const parsedQuestions = [];
                 let currentQ = null;
+                let questionNumber = 1;
 
                 for (let i = 0; i < lines.length; i++) {
                     const line = lines[i].trim();
                     
-                    // Check if line starts with a letter followed by a dot (A., B., C., etc.)
-                    if (!line.match(/^[A-Z]\./)) {
-                        if (currentQ && currentQ.question) parsedQuestions.push(currentQ);
-                        currentQ = { question: line, options: [] };
-                    } else if (line.match(/^[A-Z]\./) && currentQ) {
-                        currentQ.options.push(line.substring(3).trim());
+                    // Check if line starts with a number followed by a dot (1., 2., etc.) or is a question
+                    if (line.match(/^\d+\.\s/) || (currentQ === null && !line.match(/^[a-eA-E]\.\s/))) {
+                        // If we have a current question, save it
+                        if (currentQ && currentQ.question && currentQ.options.length > 0) {
+                            parsedQuestions.push(currentQ);
+                        }
+                        
+                        // Start new question - remove the number prefix if present
+                        const questionText = line.replace(/^\d+\.\s/, '').trim();
+                        currentQ = { 
+                            question: questionText, 
+                            options: [],
+                            questionNumber: questionNumber++
+                        };
+                    } 
+                    // Check if line starts with a letter followed by a dot (A., B., C., etc.) or (a., b., c., etc.)
+                    else if (line.match(/^[a-eA-E]\.\s/) && currentQ) {
+                        const optionText = line.substring(3).trim();
+                        currentQ.options.push(optionText);
+                    }
+                    // If line doesn't match patterns but we have a current question, it might be continuation of question text
+                    else if (currentQ && currentQ.question && !line.match(/^[a-eA-E]\.\s/)) {
+                        currentQ.question += ' ' + line;
                     }
                 }
-                if (currentQ && currentQ.question && currentQ.options.length > 0) parsedQuestions.push(currentQ);
+                
+                // Don't forget the last question
+                if (currentQ && currentQ.question && currentQ.options.length > 0) {
+                    parsedQuestions.push(currentQ);
+                }
+                
                 return parsedQuestions;
             };
 
-            const parseAnswerKey = (text) => text.split('\n').filter(line => line.trim()).map(line => line.trim());
+            // FIXED: Improved answer key parsing
+            const parseAnswerKey = (text) => {
+                return text.split('\n')
+                    .filter(line => line.trim())
+                    .map(line => {
+                        // Remove question numbers and just keep the answer letters
+                        return line.replace(/^\d+\.\s*/, '').trim().toUpperCase();
+                    });
+            };
 
             const handleQuestionUpload = (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
-                        setQuestions(parseQuestionBank(event.target.result));
+                        const parsedQuestions = parseQuestionBank(event.target.result);
+                        setQuestions(parsedQuestions);
                         setUserAnswers({});
                         setShowResults(false);
                         setExamStarted(false);
@@ -277,7 +310,10 @@
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = (event) => setAnswers(parseAnswerKey(event.target.result));
+                    reader.onload = (event) => {
+                        const parsedAnswers = parseAnswerKey(event.target.result);
+                        setAnswers(parsedAnswers);
+                    };
                     reader.readAsText(file);
                 }
             };
@@ -373,7 +409,19 @@
                     const userAnswerNorm = userAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
                     const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
                     const isCorrect = userAnswerNorm === correctAnswerNorm;
-                    return `Question ${idx + 1}: ${isCorrect ? 'Correct' : 'Wrong'}\nQuestion: ${q.question}\nYour Answer: ${userAns}\nCorrect Answer: ${correctAns}\n`;
+                    
+                    let resultText = `Question ${idx + 1}: ${isCorrect ? 'Correct' : 'Wrong'}\n`;
+                    resultText += `Question: ${q.question}\n`;
+                    resultText += `Options:\n`;
+                    q.options.forEach((opt, optIdx) => {
+                        const optionLetter = String.fromCharCode(65 + optIdx);
+                        resultText += `  ${optionLetter}. ${opt}\n`;
+                    });
+                    resultText += `Your Answer: ${userAns}\n`;
+                    resultText += `Correct Answer: ${correctAns}\n`;
+                    resultText += `Status: ${isCorrect ? '✓ CORRECT' : '✗ WRONG'}\n\n`;
+                    
+                    return resultText;
                 }).join('\n');
 
                 const percentage = questions.length > 0 ? ((score / questions.length) * 100).toFixed(1) : 0;
@@ -399,7 +447,7 @@
                 ? (studentResults.reduce((sum, r) => sum + parseFloat(r.percentage), 0) / studentResults.length).toFixed(1)
                 : 0;
 
-            // Login Screen
+            // Login Screen (unchanged)
             if (!userRole) {
                 return (
                     <div className={`min-h-screen ${bgClass} flex items-center justify-center p-4 transition-all duration-500`}>
@@ -460,7 +508,7 @@
                 );
             }
 
-            // Teacher Dashboard (unchanged for brevity)
+            // Teacher Dashboard (unchanged)
             if (userRole === 'teacher') {
                 return (
                     <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
@@ -488,7 +536,6 @@
                         </div>
 
                         <div className="max-w-7xl mx-auto px-4 py-6">
-                            {/* Teacher dashboard content remains the same */}
                             <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
                                 <h2 className="text-2xl font-bold mb-6">AWS Cloud Practitioner Exam Management</h2>
                                 <p className="text-center text-gray-500 py-8">Teacher dashboard features coming soon...</p>
@@ -548,8 +595,8 @@
                                     <div>
                                         <label className="block text-lg font-semibold mb-3">Question Bank</label>
                                         <label className={`block w-full px-6 py-8 border-2 border-dashed rounded-2xl cursor-pointer transition transform hover:scale-105 ${questions.length > 0
-                                                ? 'border-green-500 bg-green-50'
-                                                : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
+                                            ? 'border-green-500 bg-green-50'
+                                            : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
                                             }`}>
                                             <input type="file" accept=".txt" onChange={handleQuestionUpload} className="hidden" />
                                             <div className="text-center">
@@ -564,8 +611,8 @@
                                     <div>
                                         <label className="block text-lg font-semibold mb-3">Answer Key</label>
                                         <label className={`block w-full px-6 py-8 border-2 border-dashed rounded-2xl cursor-pointer transition transform hover:scale-105 ${answers.length > 0
-                                                ? 'border-green-500 bg-green-50'
-                                                : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
+                                            ? 'border-green-500 bg-green-50'
+                                            : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
                                             }`}>
                                             <input type="file" accept=".txt" onChange={handleAnswerUpload} className="hidden" />
                                             <div className="text-center">
@@ -645,7 +692,7 @@
                                 {showReview && (
                                     <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
                                         <h3 className="text-2xl font-bold mb-6">Answer Review</h3>
-                                        <div className="space-y-4">
+                                        <div className="space-y-6">
                                             {questions.map((q, idx) => {
                                                 const userAns = userAnswers[idx] || 'Not Answered';
                                                 const correctAns = answers[idx];
@@ -654,16 +701,63 @@
                                                 const isCorrect = userAnswerNorm === correctAnswerNorm;
 
                                                 return (
-                                                    <div key={idx} className={`p-4 rounded-lg border-2 ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
-                                                        <div className="flex items-start space-x-3">
+                                                    <div key={idx} className={`p-6 rounded-xl border-2 ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
+                                                        <div className="flex items-start space-x-4">
                                                             <div className={`w-8 h-8 flex-shrink-0 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
                                                                 {isCorrect ? <CheckCircle /> : <XCircle />}
                                                             </div>
                                                             <div className="flex-1">
-                                                                <p className="font-semibold text-gray-900 mb-2">Question {idx + 1}: {q.question}</p>
-                                                                <div className="space-y-1 text-sm">
-                                                                    <p><strong>Your Answer:</strong> <span className={isCorrect ? 'text-green-700' : 'text-red-700'}>{userAns}</span></p>
-                                                                    {!isCorrect && <p><strong>Correct Answer:</strong> <span className="text-green-700">{correctAns}</span></p>}
+                                                                <p className="font-semibold text-lg mb-3">Question {idx + 1}: {q.question}</p>
+                                                                
+                                                                {/* Display Options */}
+                                                                <div className="mb-4">
+                                                                    <p className="font-medium mb-2">Options:</p>
+                                                                    <div className="space-y-2">
+                                                                        {q.options.map((option, optIdx) => {
+                                                                            const optionLetter = String.fromCharCode(65 + optIdx);
+                                                                            const isCorrectOption = correctAns.split(',').map(a => a.trim()).includes(optionLetter);
+                                                                            const isUserSelected = userAns.split(',').map(a => a.trim()).includes(optionLetter);
+                                                                            
+                                                                            let optionClass = "p-3 rounded-lg border-2 ";
+                                                                            if (isCorrectOption && isUserSelected) {
+                                                                                optionClass += "border-green-500 bg-green-100";
+                                                                            } else if (isCorrectOption) {
+                                                                                optionClass += "border-green-500 bg-green-50";
+                                                                            } else if (isUserSelected) {
+                                                                                optionClass += "border-red-500 bg-red-100";
+                                                                            } else {
+                                                                                optionClass += darkMode ? "border-gray-600 bg-gray-700" : "border-gray-300 bg-gray-50";
+                                                                            }
+                                                                            
+                                                                            return (
+                                                                                <div key={optIdx} className={optionClass}>
+                                                                                    <div className="flex items-center space-x-3">
+                                                                                        <span className="font-semibold">{optionLetter}.</span>
+                                                                                        <span>{option}</span>
+                                                                                        {isCorrectOption && <span className="text-green-600 font-bold">✓ Correct</span>}
+                                                                                        {isUserSelected && !isCorrectOption && <span className="text-red-600 font-bold">✗ Your Choice</span>}
+                                                                                    </div>
+                                                                                </div>
+                                                                            );
+                                                                        })}
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                {/* Display Answer Summary */}
+                                                                <div className="space-y-2 text-sm">
+                                                                    <p><strong>Your Answer:</strong> 
+                                                                        <span className={isCorrect ? 'text-green-700 font-bold' : 'text-red-700 font-bold'}>
+                                                                            {userAns || 'Not Answered'}
+                                                                        </span>
+                                                                    </p>
+                                                                    <p><strong>Correct Answer:</strong> 
+                                                                        <span className="text-green-700 font-bold">{correctAns}</span>
+                                                                    </p>
+                                                                    <p><strong>Status:</strong> 
+                                                                        <span className={isCorrect ? 'text-green-700 font-bold' : 'text-red-700 font-bold'}>
+                                                                            {isCorrect ? ' ✓ CORRECT' : ' ✗ WRONG'}
+                                                                        </span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -705,8 +799,8 @@
                                                         key={idx}
                                                         onClick={() => handleAnswerSelect(currentQuestion, optionLetter)}
                                                         className={`w-full p-4 rounded-xl text-left border-2 transition transform hover:scale-105 ${isSelected
-                                                                ? 'border-blue-500 bg-blue-50'
-                                                                : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
+                                                            ? 'border-blue-500 bg-blue-50'
+                                                            : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
                                                             }`}
                                                     >
                                                         <div className="flex items-center space-x-3">
@@ -814,10 +908,10 @@
                                                         key={idx}
                                                         onClick={() => setCurrentQuestion(idx)}
                                                         className={`aspect-square rounded-lg font-bold text-sm transition transform hover:scale-110 relative ${isCurrent
-                                                                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                                                                : isAnswered
-                                                                    ? 'bg-green-500 text-white'
-                                                                    : darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700'
+                                                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                                                            : isAnswered
+                                                                ? 'bg-green-500 text-white'
+                                                                : darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700'
                                                             }`}
                                                     >
                                                         {idx + 1}
@@ -843,7 +937,7 @@
                         )}
                     </div>
 
-                    {/* Topic Analysis Modal */}
+                    {/* Topic Analysis Modal (unchanged) */}
                     {showTopicAnalysis && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
                             <div className={`${cardClass} rounded-2xl p-8 max-w-4xl w-full shadow-2xl my-8 max-h-[90vh] overflow-y-auto`}>
@@ -908,21 +1002,19 @@
                                                                     <p className="text-sm opacity-75">{AWS_DOMAINS[domain]?.description || 'General AWS knowledge'}</p>
                                                                 </div>
                                                                 <div className="text-right">
-                                                                    <span className={`text-2xl font-bold ${
-                                                                        data.percentage >= 80 ? 'text-green-600' : 
-                                                                        data.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-                                                                    }`}>
+                                                                    <span className={`text-2xl font-bold ${data.percentage >= 80 ? 'text-green-600' :
+                                                                            data.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
+                                                                        }`}>
                                                                         {data.percentage}%
                                                                     </span>
                                                                     <p className="text-sm">{data.correct}/{data.total} correct</p>
                                                                 </div>
                                                             </div>
                                                             <div className={`h-3 ${darkMode ? 'bg-gray-600' : 'bg-gray-200'} rounded-full overflow-hidden`}>
-                                                                <div 
-                                                                    className={`h-full ${
-                                                                        data.percentage >= 80 ? 'bg-green-500' : 
-                                                                        data.percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-                                                                    } transition-all duration-500`}
+                                                                <div
+                                                                    className={`h-full ${data.percentage >= 80 ? 'bg-green-500' :
+                                                                            data.percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                                                                        } transition-all duration-500`}
                                                                     style={{ width: `${data.percentage}%` }}
                                                                 />
                                                             </div>
@@ -941,7 +1033,7 @@
                                                         <div>
                                                             <p className="font-medium">{topic.domain}</p>
                                                             <p className="text-sm opacity-75">
-                                                                Focus on {AWS_DOMAINS[topic.domain]?.description.toLowerCase()}. 
+                                                                Focus on {AWS_DOMAINS[topic.domain]?.description.toLowerCase()}.
                                                                 Practice more questions in this area.
                                                             </p>
                                                         </div>
