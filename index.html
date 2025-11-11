@@ -18,7 +18,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // SVG Icons (unchanged)
+        // SVG Icons
         const Upload = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>);
         const CheckCircle = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>);
         const XCircle = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>);
@@ -34,42 +34,9 @@
         const User = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>);
         const Users = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>);
         const FileText = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>);
-        const TrendingUp = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>);
-        const Settings = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-2.8 2.8l-4.2 4.2M23 12h-6m-6 0H5m13.2 5.2l-4.2-4.2m-2.8-2.8l-4.2-4.2" /></svg>);
-        const LogOut = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>);
-        const Home = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>);
-        const Plus = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>);
+        const Database = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></svg>);
         const Trash = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>);
-        const Edit = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>);
-        const Star = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>);
-
-        // AWS Cloud Practitioner Exam Domains (unchanged)
-        const AWS_DOMAINS = {
-            'Cloud Concepts': {
-                keywords: ['cloud', 'benefits', 'economics', 'scalability', 'elasticity', 'agility', 'reliability', 'global infrastructure'],
-                description: 'Understanding of AWS Cloud value proposition and core services'
-            },
-            'Security and Compliance': {
-                keywords: ['security', 'iam', 'encryption', 'compliance', 'shared responsibility', 'waf', 'shield', 'kms'],
-                description: 'AWS shared responsibility model, security best practices, and compliance'
-            },
-            'Technology': {
-                keywords: ['ec2', 's3', 'lambda', 'vpc', 'rds', 'dynamodb', 'compute', 'storage', 'database', 'networking'],
-                description: 'Understanding of core AWS services and technology'
-            },
-            'Billing and Pricing': {
-                keywords: ['pricing', 'billing', 'cost optimization', 'trusted advisor', 'budget', 'cost explorer', 'savings plans'],
-                description: 'AWS pricing models, cost management tools, and billing'
-            },
-            'Architecture': {
-                keywords: ['well-architected', 'scalability', 'fault tolerance', 'high availability', 'disaster recovery', 'load balancing'],
-                description: 'Designing reliable and efficient cloud architectures'
-            },
-            'Support': {
-                keywords: ['support plans', 'technical support', 'customer service', 'health dashboard', 'documentation'],
-                description: 'AWS support plans and resources'
-            }
-        };
+        const History = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3v5h5" /><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" /><path d="M12 7v5l4 2" /></svg>);
 
         const ExamSystem = () => {
             const [userRole, setUserRole] = useState(null);
@@ -89,204 +56,227 @@
             const [examTitle, setExamTitle] = useState('AWS Cloud Practitioner Exam');
             const [showReview, setShowReview] = useState(false);
             const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
-            const [fullscreen, setFullscreen] = useState(false);
-            const [showNotes, setShowNotes] = useState(false);
-            const [notes, setNotes] = useState({});
-            const [topicAnalysis, setTopicAnalysis] = useState({});
-            const [showTopicAnalysis, setShowTopicAnalysis] = useState(false);
+            const [allStudents, setAllStudents] = useState([]);
+            const [teacherView, setTeacherView] = useState('dashboard');
+            const [selectedHistoryExam, setSelectedHistoryExam] = useState(null);
 
-            // Teacher Dashboard States
-            const [exams, setExams] = useState([]);
-            const [studentResults, setStudentResults] = useState([]);
-            const [currentView, setCurrentView] = useState('dashboard');
-            const [showCreateExam, setShowCreateExam] = useState(false);
-            const [newExam, setNewExam] = useState({ title: '', duration: 150, questions: [], answers: [] });
-
-            // Categorize questions by AWS domains (unchanged)
-            const categorizeQuestion = (questionText) => {
-                const text = questionText.toLowerCase();
-                let bestMatch = { domain: 'General', score: 0 };
-
-                Object.entries(AWS_DOMAINS).forEach(([domain, data]) => {
-                    let score = 0;
-                    data.keywords.forEach(keyword => {
-                        if (text.includes(keyword.toLowerCase())) {
-                            score += 1;
-                        }
-                    });
-                    if (score > bestMatch.score) {
-                        bestMatch = { domain, score };
-                    }
-                });
-
-                return bestMatch.score > 0 ? bestMatch.domain : 'General';
-            };
-
-            // Analyze topic performance (unchanged)
-            const analyzeTopics = () => {
-                const topicPerformance = {};
-
-                // Initialize domains
-                Object.keys(AWS_DOMAINS).forEach(domain => {
-                    topicPerformance[domain] = {
-                        total: 0,
-                        correct: 0,
-                        percentage: 0,
-                        questions: []
-                    };
-                });
-                topicPerformance['General'] = {
-                    total: 0,
-                    correct: 0,
-                    percentage: 0,
-                    questions: []
-                };
-
-                // Calculate performance for each domain
-                questions.forEach((question, idx) => {
-                    const domain = categorizeQuestion(question.question);
-                    const userAnswer = (userAnswers[idx] || '').trim();
-                    const correctAnswer = (answers[idx] || '').trim();
-
-                    const normalizedUserAnswer = userAnswer.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                    const normalizedCorrectAnswer = correctAnswer.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                    const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-
-                    topicPerformance[domain].total++;
-                    topicPerformance[domain].questions.push({
-                        question: question.question,
-                        isCorrect,
-                        userAnswer,
-                        correctAnswer,
-                        questionNumber: idx + 1
-                    });
-
-                    if (isCorrect) {
-                        topicPerformance[domain].correct++;
-                    }
-                });
-
-                // Calculate percentages
-                Object.keys(topicPerformance).forEach(domain => {
-                    if (topicPerformance[domain].total > 0) {
-                        topicPerformance[domain].percentage = Math.round(
-                            (topicPerformance[domain].correct / topicPerformance[domain].total) * 100
-                        );
-                    }
-                });
-
-                return topicPerformance;
-            };
-
-            // Get weak and strong topics (unchanged)
-            const getWeakStrongTopics = (analysis) => {
-                const topics = Object.entries(analysis)
-                    .filter(([domain, data]) => data.total > 0)
-                    .map(([domain, data]) => ({
-                        domain,
-                        ...data
-                    }))
-                    .sort((a, b) => a.percentage - b.percentage);
-
-                const weakTopics = topics.slice(0, Math.min(3, topics.length));
-                const strongTopics = topics.slice(-Math.min(3, topics.length)).reverse();
-
-                return { weakTopics, strongTopics };
-            };
-
+            // Initialize JSON Storage
             useEffect(() => {
-                if (examStarted && timeLeft > 0 && !showResults) {
-                    const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-                    if (timeLeft === 300) playSound('warning');
-                    return () => clearTimeout(timer);
-                } else if (timeLeft === 0 && examStarted) {
-                    handleSubmit();
+                loadAllStudents();
+                if (userRole === 'student') {
+                    loadStudentExamHistory();
                 }
-            }, [timeLeft, examStarted, showResults]);
+            }, [userRole]);
 
-            useEffect(() => {
-                if (showResults && questions.length > 0) {
-                    const analysis = analyzeTopics();
-                    setTopicAnalysis(analysis);
-                }
-            }, [showResults, questions, userAnswers, answers]);
-
-            const playSound = (type) => {
+            // Load all students for teacher view
+            const loadAllStudents = () => {
                 try {
-                    const context = new (window.AudioContext || window.webkitAudioContext)();
-                    const oscillator = context.createOscillator();
-                    const gainNode = context.createGain();
-                    oscillator.connect(gainNode);
-                    gainNode.connect(context.destination);
-                    oscillator.frequency.value = type === 'warning' ? 800 : type === 'success' ? 600 : 440;
-                    oscillator.type = 'sine';
-                    gainNode.gain.setValueAtTime(0.3, context.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.5);
-                    oscillator.start(context.currentTime);
-                    oscillator.stop(context.currentTime + 0.5);
-                } catch (e) { }
+                    const storedData = localStorage.getItem('awsExamStudents');
+                    if (storedData) {
+                        const studentsData = JSON.parse(storedData);
+                        setAllStudents(studentsData);
+                    }
+                } catch (error) {
+                    console.error('Error loading students:', error);
+                }
             };
 
-            const formatTime = (seconds) => {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                const hours = Math.floor(mins / 60);
-                const remainingMins = mins % 60;
-                return hours > 0 ? `${hours}:${remainingMins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}` : `${mins}:${secs.toString().padStart(2, '0')}`;
+            // Load student's exam history
+            const loadStudentExamHistory = () => {
+                if (!userName) return;
+
+                try {
+                    const storedData = localStorage.getItem('awsExamResults');
+                    if (storedData) {
+                        const allResults = JSON.parse(storedData);
+                        const studentResults = allResults.filter(result => result.studentName === userName);
+                        setExamHistory(studentResults);
+                    }
+                } catch (error) {
+                    console.error('Error loading exam history:', error);
+                }
             };
 
-            // FIXED: Improved question parsing to handle various formats
+            // Save student to JSON storage
+            const saveStudentToDatabase = (name, role) => {
+                try {
+                    const storedData = localStorage.getItem('awsExamStudents');
+                    let students = storedData ? JSON.parse(storedData) : [];
+
+                    // Check if student already exists
+                    const existingStudentIndex = students.findIndex(s => s.name === name);
+
+                    if (existingStudentIndex >= 0) {
+                        // Update existing student
+                        students[existingStudentIndex].role = role;
+                        students[existingStudentIndex].updatedAt = new Date().toISOString();
+                    } else {
+                        // Add new student
+                        students.push({
+                            id: Date.now().toString(),
+                            name: name,
+                            role: role,
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString()
+                        });
+                    }
+
+                    localStorage.setItem('awsExamStudents', JSON.stringify(students));
+                    setAllStudents(students);
+                    return true;
+                } catch (error) {
+                    console.error('Error saving student:', error);
+                    return false;
+                }
+            };
+
+            // Save exam results to JSON storage
+            const saveExamToDatabase = (examData) => {
+                try {
+                    const storedData = localStorage.getItem('awsExamResults');
+                    let examResults = storedData ? JSON.parse(storedData) : [];
+
+                    examResults.push({
+                        id: Date.now().toString(),
+                        studentName: examData.studentName,
+                        examTitle: examData.examTitle,
+                        score: examData.score,
+                        totalQuestions: examData.total,
+                        percentage: examData.percentage,
+                        timeSpent: examData.timeSpent,
+                        dateCreated: new Date().toISOString(),
+                        questions: examData.questions,
+                        answers: examData.answers,
+                        userAnswers: examData.userAnswers
+                    });
+
+                    localStorage.setItem('awsExamResults', JSON.stringify(examResults));
+                    console.log('Exam results saved to JSON storage');
+                    loadStudentExamHistory();
+                    loadAllStudents();
+                } catch (error) {
+                    console.error('Error saving exam results:', error);
+                }
+            };
+
+            // Delete student and their data
+            const deleteStudent = (studentName) => {
+                try {
+                    // Delete student from students list
+                    const storedStudents = localStorage.getItem('awsExamStudents');
+                    if (storedStudents) {
+                        let students = JSON.parse(storedStudents);
+                        students = students.filter(s => s.name !== studentName);
+                        localStorage.setItem('awsExamStudents', JSON.stringify(students));
+                        setAllStudents(students);
+                    }
+
+                    // Delete student's exam results
+                    const storedResults = localStorage.getItem('awsExamResults');
+                    if (storedResults) {
+                        let examResults = JSON.parse(storedResults);
+                        examResults = examResults.filter(result => result.studentName !== studentName);
+                        localStorage.setItem('awsExamResults', JSON.stringify(examResults));
+                    }
+
+                    console.log(`Student ${studentName} deleted successfully`);
+                } catch (error) {
+                    console.error('Error deleting student:', error);
+                }
+            };
+
+            // Delete specific exam result
+            const deleteExamResult = (examId) => {
+                try {
+                    const storedResults = localStorage.getItem('awsExamResults');
+                    if (storedResults) {
+                        let examResults = JSON.parse(storedResults);
+                        examResults = examResults.filter(result => result.id !== examId);
+                        localStorage.setItem('awsExamResults', JSON.stringify(examResults));
+                        loadStudentExamHistory();
+                        loadAllStudents();
+                        console.log('Exam result deleted successfully');
+                    }
+                } catch (error) {
+                    console.error('Error deleting exam result:', error);
+                }
+            };
+
+            // Load a previous exam attempt for review
+            const loadPreviousExam = (examData) => {
+                setQuestions(examData.questions);
+                setAnswers(examData.answers);
+                setUserAnswers(examData.userAnswers);
+                setScore(examData.score);
+                setExamTitle(`${examData.examTitle} (Previous Attempt)`);
+                setShowResults(true);
+                setShowStats(false);
+                setSelectedHistoryExam(null);
+            };
+
+            // Enhanced question parser
             const parseQuestionBank = (text) => {
                 const lines = text.split('\n').filter(line => line.trim());
                 const parsedQuestions = [];
                 let currentQ = null;
-                let questionNumber = 1;
 
                 for (let i = 0; i < lines.length; i++) {
                     const line = lines[i].trim();
-                    
-                    // Check if line starts with a number followed by a dot (1., 2., etc.) or is a question
-                    if (line.match(/^\d+\.\s/) || (currentQ === null && !line.match(/^[a-eA-E]\.\s/))) {
-                        // If we have a current question, save it
-                        if (currentQ && currentQ.question && currentQ.options.length > 0) {
-                            parsedQuestions.push(currentQ);
-                        }
-                        
-                        // Start new question - remove the number prefix if present
-                        const questionText = line.replace(/^\d+\.\s/, '').trim();
-                        currentQ = { 
-                            question: questionText, 
-                            options: [],
-                            questionNumber: questionNumber++
-                        };
-                    } 
-                    // Check if line starts with a letter followed by a dot (A., B., C., etc.) or (a., b., c., etc.)
-                    else if (line.match(/^[a-eA-E]\.\s/) && currentQ) {
-                        const optionText = line.substring(3).trim();
-                        currentQ.options.push(optionText);
+                    if (!line) continue;
+
+                    const isNewQuestion =
+                        /^\d+[\.\)]/.test(line) ||
+                        (line.length > 30 && /[?]/.test(line) && !/^[A-Z][\.\)]/.test(line)) ||
+                        (!currentQ && line.length > 10);
+
+                    if (isNewQuestion && currentQ && currentQ.options.length > 0) {
+                        parsedQuestions.push(currentQ);
+                        currentQ = null;
                     }
-                    // If line doesn't match patterns but we have a current question, it might be continuation of question text
-                    else if (currentQ && currentQ.question && !line.match(/^[a-eA-E]\.\s/)) {
-                        currentQ.question += ' ' + line;
+
+                    if (isNewQuestion || !currentQ) {
+                        let questionText = line.replace(/^\d+[\.\)]\s*/, '').trim();
+
+                        if (questionText.length > 150) {
+                            const sentences = questionText.split(/[.!?]+/);
+                            if (sentences.length > 1) {
+                                questionText = sentences[0] + (questionText.match(/[.!?]/) ? questionText.match(/[.!?]/)[0] : '');
+                            }
+                        }
+
+                        currentQ = { question: questionText, options: [] };
+                    } else if (currentQ && /^[A-Z][\.\)]\s/.test(line)) {
+                        const optionText = line.replace(/^[A-Z][\.\)]\s*/, '').trim();
+                        if (optionText) {
+                            currentQ.options.push(optionText);
+                        }
+                    } else if (currentQ && currentQ.options.length === 0 && line.length > 0) {
+                        currentQ.options.push(line);
                     }
                 }
-                
-                // Don't forget the last question
-                if (currentQ && currentQ.question && currentQ.options.length > 0) {
+
+                if (currentQ && currentQ.options.length > 0) {
                     parsedQuestions.push(currentQ);
                 }
-                
+
                 return parsedQuestions;
             };
 
-            // FIXED: Improved answer key parsing
             const parseAnswerKey = (text) => {
-                return text.split('\n')
-                    .filter(line => line.trim())
-                    .map(line => {
-                        // Remove question numbers and just keep the answer letters
-                        return line.replace(/^\d+\.\s*/, '').trim().toUpperCase();
-                    });
+                const lines = text.split('\n').filter(line => line.trim());
+                const answers = [];
+
+                for (let line of lines) {
+                    const cleanLine = line.trim();
+                    const answerMatch = cleanLine.match(/^(\d+[\.\)]\s*)?([A-Z,]+)/);
+                    if (answerMatch) {
+                        answers.push(answerMatch[2]);
+                    } else if (cleanLine.length === 1 && /[A-Z]/.test(cleanLine)) {
+                        answers.push(cleanLine);
+                    }
+                }
+
+                return answers;
             };
 
             const handleQuestionUpload = (e) => {
@@ -301,6 +291,7 @@
                         setExamStarted(false);
                         setCurrentQuestion(0);
                         setFlaggedQuestions(new Set());
+                        setExamTitle('AWS Cloud Practitioner Exam');
                     };
                     reader.readAsText(file);
                 }
@@ -316,6 +307,35 @@
                     };
                     reader.readAsText(file);
                 }
+            };
+
+            const generateSampleQuestions = () => {
+                const sampleQuestions = [
+                    {
+                        question: "What is the main benefit of cloud computing?",
+                        options: [
+                            "Increased latency",
+                            "On-premises dependency",
+                            "Pay-as-you-go pricing",
+                            "Manual scalability"
+                        ]
+                    },
+                    {
+                        question: "Which AWS service provides global infrastructure?",
+                        options: [
+                            "S3",
+                            "EC2",
+                            "AWS Regions and Availability Zones",
+                            "IAM"
+                        ]
+                    }
+                ];
+
+                const sampleAnswers = ["C", "C"];
+
+                setQuestions(sampleQuestions);
+                setAnswers(sampleAnswers);
+                setExamTitle('AWS Cloud Practitioner Exam');
             };
 
             const handleAnswerSelect = (questionIndex, option) => {
@@ -337,7 +357,6 @@
                 } else {
                     setUserAnswers({ ...userAnswers, [questionIndex]: option });
                 }
-                playSound('click');
             };
 
             const toggleFlag = (questionIndex) => {
@@ -353,8 +372,7 @@
                 setShowResults(false);
                 setCurrentQuestion(0);
                 setFlaggedQuestions(new Set());
-                setNotes({});
-                playSound('start');
+                setExamTitle('AWS Cloud Practitioner Exam');
             };
 
             const handleSubmit = () => {
@@ -374,7 +392,6 @@
                 setShowResults(true);
                 setExamStarted(false);
                 setShowConfirmSubmit(false);
-                playSound('success');
 
                 const result = {
                     date: new Date().toLocaleString(),
@@ -383,10 +400,14 @@
                     percentage: ((correct / questions.length) * 100).toFixed(1),
                     timeSpent: 9000 - timeLeft,
                     examTitle: examTitle,
-                    studentName: userName
+                    studentName: userName,
+                    questions: questions,
+                    answers: answers,
+                    userAnswers: userAnswers
                 };
-                setExamHistory([result, ...examHistory]);
-                setStudentResults([result, ...studentResults]);
+
+                // Save to JSON storage
+                saveExamToDatabase(result);
             };
 
             const resetExam = () => {
@@ -398,40 +419,23 @@
                 setScore(0);
                 setFlaggedQuestions(new Set());
                 setShowReview(false);
-                setNotes({});
-                setTopicAnalysis({});
+                setExamTitle('AWS Cloud Practitioner Exam');
             };
 
-            const exportResults = () => {
-                const results = questions.map((q, idx) => {
-                    const userAns = userAnswers[idx] || 'Not Answered';
-                    const correctAns = answers[idx];
-                    const userAnswerNorm = userAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                    const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                    const isCorrect = userAnswerNorm === correctAnswerNorm;
-                    
-                    let resultText = `Question ${idx + 1}: ${isCorrect ? 'Correct' : 'Wrong'}\n`;
-                    resultText += `Question: ${q.question}\n`;
-                    resultText += `Options:\n`;
-                    q.options.forEach((opt, optIdx) => {
-                        const optionLetter = String.fromCharCode(65 + optIdx);
-                        resultText += `  ${optionLetter}. ${opt}\n`;
-                    });
-                    resultText += `Your Answer: ${userAns}\n`;
-                    resultText += `Correct Answer: ${correctAns}\n`;
-                    resultText += `Status: ${isCorrect ? '✓ CORRECT' : '✗ WRONG'}\n\n`;
-                    
-                    return resultText;
-                }).join('\n');
-
-                const percentage = questions.length > 0 ? ((score / questions.length) * 100).toFixed(1) : 0;
-                const blob = new Blob([`${examTitle}\nStudent: ${userName}\nScore: ${score}/${questions.length} (${percentage}%)\nDate: ${new Date().toLocaleString()}\n\n${results}`], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${userName}_exam_results.txt`;
-                a.click();
+            const formatTime = (seconds) => {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
             };
+
+            useEffect(() => {
+                if (examStarted && timeLeft > 0 && !showResults) {
+                    const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+                    return () => clearTimeout(timer);
+                } else if (timeLeft === 0 && examStarted) {
+                    handleSubmit();
+                }
+            }, [timeLeft, examStarted, showResults]);
 
             const percentage = questions.length > 0 ? ((score / questions.length) * 100).toFixed(1) : 0;
             const passed = percentage >= 70;
@@ -443,11 +447,500 @@
             const cardClass = darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900';
             const headerClass = darkMode ? 'bg-gradient-to-r from-gray-700 to-gray-900' : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600';
 
-            const avgScore = studentResults.length > 0
-                ? (studentResults.reduce((sum, r) => sum + parseFloat(r.percentage), 0) / studentResults.length).toFixed(1)
-                : 0;
+            // Fixed Answer Review Component
+            const AnswerReview = () => {
+                const [expandedQuestions, setExpandedQuestions] = useState(new Set());
 
-            // Login Screen (unchanged)
+                const toggleQuestion = (index) => {
+                    const newExpanded = new Set(expandedQuestions);
+                    if (newExpanded.has(index)) {
+                        newExpanded.delete(index);
+                    } else {
+                        newExpanded.add(index);
+                    }
+                    setExpandedQuestions(newExpanded);
+                };
+
+                return (
+                    <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-2xl font-bold">Detailed Answer Review</h3>
+                            <div className="flex items-center space-x-2">
+                                <span className={`px-3 py-1 rounded-full text-sm font-bold ${passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                    Score: {score}/{questions.length} ({percentage}%)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            {questions.map((q, idx) => {
+                                const userAns = userAnswers[idx] || 'Not Answered';
+                                const correctAns = answers[idx] || '';
+                                const userAnswerNorm = userAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
+                                const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
+                                const isCorrect = userAnswerNorm === correctAnswerNorm;
+                                const isExpanded = expandedQuestions.has(idx);
+
+                                return (
+                                    <div key={idx} className={`border-2 rounded-lg transition-all duration-300 ${isCorrect
+                                        ? 'border-green-500 bg-green-50'
+                                        : 'border-red-500 bg-red-50'
+                                        }`}>
+                                        <div
+                                            className="p-4 cursor-pointer hover:bg-opacity-80 transition"
+                                            onClick={() => toggleQuestion(idx)}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center space-x-3">
+                                                    <div className={`w-8 h-8 flex-shrink-0 rounded-full flex items-center justify-center ${isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                                                        }`}>
+                                                        {isCorrect ? '✓' : '✗'}
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-semibold text-lg">
+                                                            Question {idx + 1}
+                                                        </h4>
+                                                        <p className="text-sm opacity-75">
+                                                            {isCorrect ? 'Correct' : 'Incorrect'}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
+                                                    ▼
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {isExpanded && (
+                                            <div className="p-4 border-t border-opacity-50 space-y-4">
+                                                <div>
+                                                    <h5 className="font-bold text-lg mb-2">Question:</h5>
+                                                    <p className="text-gray-700 bg-white p-3 rounded border">{q.question}</p>
+                                                </div>
+
+                                                <div>
+                                                    <h5 className="font-bold text-lg mb-2">Options:</h5>
+                                                    <div className="space-y-2">
+                                                        {q.options.map((option, optIdx) => {
+                                                            const optionLetter = String.fromCharCode(65 + optIdx);
+                                                            const isUserAnswer = userAns.includes(optionLetter);
+                                                            const isCorrectAnswer = correctAns.includes(optionLetter);
+
+                                                            return (
+                                                                <div
+                                                                    key={optIdx}
+                                                                    className={`p-3 rounded border-2 transition-all ${isUserAnswer && isCorrectAnswer
+                                                                        ? 'border-green-500 bg-green-100'
+                                                                        : isUserAnswer && !isCorrectAnswer
+                                                                            ? 'border-red-500 bg-red-100'
+                                                                            : isCorrectAnswer
+                                                                                ? 'border-green-500 bg-green-50'
+                                                                                : 'border-gray-300 bg-gray-50'
+                                                                        }`}
+                                                                >
+                                                                    <div className="flex items-center space-x-3">
+                                                                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${isUserAnswer && isCorrectAnswer
+                                                                            ? 'border-green-500 bg-green-500 text-white'
+                                                                            : isUserAnswer && !isCorrectAnswer
+                                                                                ? 'border-red-500 bg-red-500 text-white'
+                                                                                : isCorrectAnswer
+                                                                                    ? 'border-green-500 text-green-500'
+                                                                                    : 'border-gray-400 text-gray-400'
+                                                                            }`}>
+                                                                            {optionLetter}
+                                                                        </div>
+                                                                        <span className={isUserAnswer || isCorrectAnswer ? 'font-medium' : ''}>
+                                                                            {option}
+                                                                        </span>
+                                                                        {isUserAnswer && isCorrectAnswer && (
+                                                                            <span className="ml-auto text-green-600 font-bold">✓ Your Answer</span>
+                                                                        )}
+                                                                        {isUserAnswer && !isCorrectAnswer && (
+                                                                            <span className="ml-auto text-red-600 font-bold">✗ Your Answer</span>
+                                                                        )}
+                                                                        {!isUserAnswer && isCorrectAnswer && (
+                                                                            <span className="ml-auto text-green-600 font-bold">✓ Correct Answer</span>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <div className={`p-3 rounded ${isCorrect ? 'bg-green-100 border border-green-300' : 'bg-red-100 border border-red-300'
+                                                        }`}>
+                                                        <h6 className="font-semibold mb-1">Your Answer:</h6>
+                                                        <p className={isCorrect ? 'text-green-700' : 'text-red-700'}>
+                                                            {userAns || 'Not Answered'}
+                                                        </p>
+                                                    </div>
+                                                    <div className="p-3 rounded bg-green-100 border border-green-300">
+                                                        <h6 className="font-semibold mb-1">Correct Answer:</h6>
+                                                        <p className="text-green-700">{correctAns}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                );
+            };
+
+            // History Exam Review Component
+            const HistoryExamReview = ({ exam }) => {
+                const [expandedQuestions, setExpandedQuestions] = useState(new Set());
+
+                const toggleQuestion = (index) => {
+                    const newExpanded = new Set(expandedQuestions);
+                    if (newExpanded.has(index)) {
+                        newExpanded.delete(index);
+                    } else {
+                        newExpanded.add(index);
+                    }
+                    setExpandedQuestions(newExpanded);
+                };
+
+                return (
+                    <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
+                        <div className="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 className="text-2xl font-bold">Previous Exam Review</h3>
+                                <p className="text-gray-500">Taken on: {exam.date}</p>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <span className={`px-3 py-1 rounded-full text-sm font-bold ${exam.percentage >= 70 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                    }`}>
+                                    Score: {exam.score}/{exam.total} ({exam.percentage}%)
+                                </span>
+                                <button
+                                    onClick={() => setSelectedHistoryExam(null)}
+                                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
+                                >
+                                    Back to History
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            {exam.questions.map((q, idx) => {
+                                const userAns = exam.userAnswers[idx] || 'Not Answered';
+                                const correctAns = exam.answers[idx] || '';
+                                const userAnswerNorm = userAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
+                                const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
+                                const isCorrect = userAnswerNorm === correctAnswerNorm;
+                                const isExpanded = expandedQuestions.has(idx);
+
+                                return (
+                                    <div key={idx} className={`border-2 rounded-lg transition-all duration-300 ${isCorrect
+                                        ? 'border-green-500 bg-green-50'
+                                        : 'border-red-500 bg-red-50'
+                                        }`}>
+                                        <div
+                                            className="p-4 cursor-pointer hover:bg-opacity-80 transition"
+                                            onClick={() => toggleQuestion(idx)}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center space-x-3">
+                                                    <div className={`w-8 h-8 flex-shrink-0 rounded-full flex items-center justify-center ${isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                                                        }`}>
+                                                        {isCorrect ? '✓' : '✗'}
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="font-semibold text-lg">
+                                                            Question {idx + 1}
+                                                        </h4>
+                                                        <p className="text-sm opacity-75">
+                                                            {isCorrect ? 'Correct' : 'Incorrect'}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
+                                                    ▼
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {isExpanded && (
+                                            <div className="p-4 border-t border-opacity-50 space-y-4">
+                                                <div>
+                                                    <h5 className="font-bold text-lg mb-2">Question:</h5>
+                                                    <p className="text-gray-700 bg-white p-3 rounded border">{q.question}</p>
+                                                </div>
+
+                                                <div>
+                                                    <h5 className="font-bold text-lg mb-2">Options:</h5>
+                                                    <div className="space-y-2">
+                                                        {q.options.map((option, optIdx) => {
+                                                            const optionLetter = String.fromCharCode(65 + optIdx);
+                                                            const isUserAnswer = userAns.includes(optionLetter);
+                                                            const isCorrectAnswer = correctAns.includes(optionLetter);
+
+                                                            return (
+                                                                <div
+                                                                    key={optIdx}
+                                                                    className={`p-3 rounded border-2 transition-all ${isUserAnswer && isCorrectAnswer
+                                                                        ? 'border-green-500 bg-green-100'
+                                                                        : isUserAnswer && !isCorrectAnswer
+                                                                            ? 'border-red-500 bg-red-100'
+                                                                            : isCorrectAnswer
+                                                                                ? 'border-green-500 bg-green-50'
+                                                                                : 'border-gray-300 bg-gray-50'
+                                                                        }`}
+                                                                >
+                                                                    <div className="flex items-center space-x-3">
+                                                                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${isUserAnswer && isCorrectAnswer
+                                                                            ? 'border-green-500 bg-green-500 text-white'
+                                                                            : isUserAnswer && !isCorrectAnswer
+                                                                                ? 'border-red-500 bg-red-500 text-white'
+                                                                                : isCorrectAnswer
+                                                                                    ? 'border-green-500 text-green-500'
+                                                                                    : 'border-gray-400 text-gray-400'
+                                                                            }`}>
+                                                                            {optionLetter}
+                                                                        </div>
+                                                                        <span className={isUserAnswer || isCorrectAnswer ? 'font-medium' : ''}>
+                                                                            {option}
+                                                                        </span>
+                                                                        {isUserAnswer && isCorrectAnswer && (
+                                                                            <span className="ml-auto text-green-600 font-bold">✓ Your Answer</span>
+                                                                        )}
+                                                                        {isUserAnswer && !isCorrectAnswer && (
+                                                                            <span className="ml-auto text-red-600 font-bold">✗ Your Answer</span>
+                                                                        )}
+                                                                        {!isUserAnswer && isCorrectAnswer && (
+                                                                            <span className="ml-auto text-green-600 font-bold">✓ Correct Answer</span>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <div className={`p-3 rounded ${isCorrect ? 'bg-green-100 border border-green-300' : 'bg-red-100 border border-red-300'
+                                                        }`}>
+                                                        <h6 className="font-semibold mb-1">Your Answer:</h6>
+                                                        <p className={isCorrect ? 'text-green-700' : 'text-red-700'}>
+                                                            {userAns || 'Not Answered'}
+                                                        </p>
+                                                    </div>
+                                                    <div className="p-3 rounded bg-green-100 border border-green-300">
+                                                        <h6 className="font-semibold mb-1">Correct Answer:</h6>
+                                                        <p className="text-green-700">{correctAns}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                );
+            };
+
+            // Teacher Dashboard Components
+            const TeacherDashboard = () => {
+                const [selectedStudent, setSelectedStudent] = useState(null);
+                const [studentExamHistory, setStudentExamHistory] = useState([]);
+
+                const loadStudentDetails = (student) => {
+                    setSelectedStudent(student);
+
+                    try {
+                        const storedResults = localStorage.getItem('awsExamResults');
+                        if (storedResults) {
+                            const allResults = JSON.parse(storedResults);
+                            const studentResults = allResults.filter(result => result.studentName === student.name);
+                            setStudentExamHistory(studentResults);
+                        } else {
+                            setStudentExamHistory([]);
+                        }
+                    } catch (error) {
+                        console.error('Error loading student details:', error);
+                    }
+                };
+
+                // Calculate student stats
+                const getStudentStats = (studentName) => {
+                    try {
+                        const storedResults = localStorage.getItem('awsExamResults');
+                        if (storedResults) {
+                            const allResults = JSON.parse(storedResults);
+                            const studentResults = allResults.filter(result => result.studentName === studentName);
+
+                            if (studentResults.length === 0) {
+                                return { examCount: 0, avgScore: 0, bestScore: 0 };
+                            }
+
+                            const examCount = studentResults.length;
+                            const avgScore = studentResults.reduce((sum, result) => sum + parseFloat(result.percentage), 0) / examCount;
+                            const bestScore = Math.max(...studentResults.map(result => parseFloat(result.percentage)));
+
+                            return {
+                                examCount,
+                                avgScore: Math.round(avgScore),
+                                bestScore: Math.round(bestScore)
+                            };
+                        }
+                    } catch (error) {
+                        console.error('Error calculating student stats:', error);
+                    }
+
+                    return { examCount: 0, avgScore: 0, bestScore: 0 };
+                };
+
+                return (
+                    <div className="space-y-6">
+                        {/* Students Overview */}
+                        {teacherView === 'dashboard' && (
+                            <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
+                                <h3 className="text-2xl font-bold mb-6">Students Overview</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {allStudents.map((student, index) => {
+                                        const stats = getStudentStats(student.name);
+
+                                        return (
+                                            <div key={index} className="border rounded-lg p-4 hover:shadow-md transition">
+                                                <div className="flex justify-between items-start mb-3">
+                                                    <div>
+                                                        <h4 className="font-bold text-lg">{student.name}</h4>
+                                                        <p className="text-sm text-gray-500 capitalize">{student.role}</p>
+                                                        <p className="text-xs text-gray-400">
+                                                            Joined: {new Date(student.createdAt).toLocaleDateString()}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => deleteStudent(student.name)}
+                                                        className="text-red-500 hover:text-red-700 p-1"
+                                                        title="Delete Student"
+                                                    >
+                                                        <Trash />
+                                                    </button>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <div className="flex justify-between text-sm">
+                                                        <span>Exams Taken:</span>
+                                                        <span className="font-bold">{stats.examCount}</span>
+                                                    </div>
+                                                    <div className="flex justify-between text-sm">
+                                                        <span>Average Score:</span>
+                                                        <span className={`font-bold ${stats.avgScore >= 70 ? 'text-green-600' : 'text-red-600'
+                                                            }`}>
+                                                            {stats.avgScore}%
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex justify-between text-sm">
+                                                        <span>Best Score:</span>
+                                                        <span className={`font-bold ${stats.bestScore >= 70 ? 'text-green-600' : 'text-red-600'
+                                                            }`}>
+                                                            {stats.bestScore}%
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => {
+                                                        loadStudentDetails(student);
+                                                        setTeacherView('student-details');
+                                                    }}
+                                                    className="w-full mt-3 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                                                >
+                                                    View Details
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Student Details View */}
+                        {teacherView === 'student-details' && selectedStudent && (
+                            <div className="space-y-6">
+                                <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
+                                    <div className="flex justify-between items-center mb-6">
+                                        <div>
+                                            <h3 className="text-2xl font-bold">{selectedStudent.name}'s Exam History</h3>
+                                            <p className="text-gray-500">Role: {selectedStudent.role}</p>
+                                        </div>
+                                        <button
+                                            onClick={() => setTeacherView('dashboard')}
+                                            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+                                        >
+                                            ← Back to Students
+                                        </button>
+                                    </div>
+
+                                    {studentExamHistory.length > 0 ? (
+                                        <div className="space-y-4">
+                                            {studentExamHistory.map((exam, index) => (
+                                                <div key={index} className="border rounded-lg p-4 hover:shadow-md transition">
+                                                    <div className="flex justify-between items-center mb-3">
+                                                        <div>
+                                                            <h4 className="font-bold text-lg">{exam.examTitle}</h4>
+                                                            <p className="text-sm text-gray-500">{new Date(exam.dateCreated).toLocaleString()}</p>
+                                                        </div>
+                                                        <div className="flex items-center space-x-2">
+                                                            <span className={`px-3 py-1 rounded-full text-sm font-bold ${exam.percentage >= 70 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                                                }`}>
+                                                                {exam.score}/{exam.totalQuestions} ({exam.percentage}%)
+                                                            </span>
+                                                            <button
+                                                                onClick={() => deleteExamResult(exam.id)}
+                                                                className="text-red-500 hover:text-red-700 p-1"
+                                                                title="Delete Exam Result"
+                                                            >
+                                                                <Trash />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center space-x-4 text-sm">
+                                                        <span className="flex items-center space-x-1">
+                                                            <Clock />
+                                                            <span>{formatTime(exam.timeSpent)}</span>
+                                                        </span>
+                                                        <span className={`px-2 py-1 rounded ${exam.percentage >= 70 ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                                                            }`}>
+                                                            {exam.percentage >= 70 ? 'PASS' : 'FAIL'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className="text-center text-gray-500 py-8">
+                                            No exam history available for {selectedStudent.name}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+            // Login Handler
+            const handleLogin = (role) => {
+                if (userName.trim()) {
+                    // Save student to JSON storage
+                    if (saveStudentToDatabase(userName, role)) {
+                        setUserRole(role);
+                        if (role === 'student') {
+                            loadStudentExamHistory();
+                        } else {
+                            loadAllStudents();
+                        }
+                    }
+                }
+            };
+
+            // Login Screen
             if (!userRole) {
                 return (
                     <div className={`min-h-screen ${bgClass} flex items-center justify-center p-4 transition-all duration-500`}>
@@ -476,8 +969,8 @@
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <button
-                                        onClick={() => userName && setUserRole('student')}
-                                        disabled={!userName}
+                                        onClick={() => handleLogin('student')}
+                                        disabled={!userName.trim()}
                                         className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 rounded-xl font-bold hover:shadow-xl transform hover:scale-105 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     >
                                         <div className="flex flex-col items-center space-y-2">
@@ -486,8 +979,8 @@
                                         </div>
                                     </button>
                                     <button
-                                        onClick={() => userName && setUserRole('teacher')}
-                                        disabled={!userName}
+                                        onClick={() => handleLogin('teacher')}
+                                        disabled={!userName.trim()}
                                         className="bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 rounded-xl font-bold hover:shadow-xl transform hover:scale-105 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     >
                                         <div className="flex flex-col items-center space-y-2">
@@ -503,12 +996,19 @@
                                     {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
                                 </button>
                             </div>
+
+                            <div className="mt-4 text-center">
+                                <div className="flex items-center justify-center space-x-2 text-green-600">
+                                    <Database />
+                                    <span className="text-sm">JSON Storage Ready</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 );
             }
 
-            // Teacher Dashboard (unchanged)
+            // Teacher Dashboard
             if (userRole === 'teacher') {
                 return (
                     <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
@@ -516,18 +1016,22 @@
                             <div className="max-w-7xl mx-auto px-4 py-4">
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center space-x-4">
-                                        <div className="w-10 h-10"><BookOpen /></div>
+                                        <div className="w-10 h-10"><Users /></div>
                                         <div>
                                             <h1 className="text-2xl font-bold">Teacher Dashboard</h1>
                                             <p className="text-sm text-blue-100">Welcome, {userName}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center space-x-4">
+                                        <div className="flex items-center space-x-2 text-green-400">
+                                            <Database />
+                                            <span className="text-sm">{allStudents.length} Students</span>
+                                        </div>
                                         <button onClick={() => setDarkMode(!darkMode)} className="px-4 py-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
                                             {darkMode ? '☀️' : '🌙'}
                                         </button>
                                         <button onClick={() => setUserRole(null)} className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition flex items-center space-x-2">
-                                            <div className="w-5 h-5"><LogOut /></div>
+                                            <div className="w-5 h-5"><User /></div>
                                             <span>Logout</span>
                                         </button>
                                     </div>
@@ -536,16 +1040,47 @@
                         </div>
 
                         <div className="max-w-7xl mx-auto px-4 py-6">
-                            <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
-                                <h2 className="text-2xl font-bold mb-6">AWS Cloud Practitioner Exam Management</h2>
-                                <p className="text-center text-gray-500 py-8">Teacher dashboard features coming soon...</p>
-                            </div>
+                            <TeacherDashboard />
                         </div>
                     </div>
                 );
             }
 
-            // Student Interface
+            // Student Interface - Show History Exam Review if selected
+            if (selectedHistoryExam) {
+                return (
+                    <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
+                        <div className={`${headerClass} text-white shadow-lg`}>
+                            <div className="max-w-7xl mx-auto px-4 py-4">
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center space-x-4">
+                                        <div className="w-10 h-10"><History /></div>
+                                        <div>
+                                            <h1 className="text-2xl font-bold">Exam History Review</h1>
+                                            <p className="text-sm text-blue-100">Welcome back, {userName}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center space-x-4">
+                                        <button onClick={() => setDarkMode(!darkMode)} className="px-4 py-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
+                                            {darkMode ? '☀️' : '🌙'}
+                                        </button>
+                                        <button onClick={() => setSelectedHistoryExam(null)} className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition flex items-center space-x-2">
+                                            <div className="w-5 h-5"><User /></div>
+                                            <span>Back to Current</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="max-w-7xl mx-auto px-4 py-6">
+                            <HistoryExamReview exam={selectedHistoryExam} />
+                        </div>
+                    </div>
+                );
+            }
+
+            // Student Interface - Normal View
             return (
                 <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
                     <div className={`${headerClass} text-white shadow-lg`}>
@@ -565,14 +1100,15 @@
                                             <span>{formatTime(timeLeft)}</span>
                                         </div>
                                     )}
-                                    <button onClick={() => setShowStats(!showStats)} className="px-4 py-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
-                                        📊 Stats
+                                    <button onClick={() => setShowStats(!showStats)} className="px-4 py-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition flex items-center space-x-2">
+                                        <div className="w-5 h-5"><History /></div>
+                                        <span>History ({examHistory.length})</span>
                                     </button>
                                     <button onClick={() => setDarkMode(!darkMode)} className="px-4 py-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
                                         {darkMode ? '☀️' : '🌙'}
                                     </button>
                                     <button onClick={() => setUserRole(null)} className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition flex items-center space-x-2">
-                                        <div className="w-5 h-5"><LogOut /></div>
+                                        <div className="w-5 h-5"><User /></div>
                                         <span>Logout</span>
                                     </button>
                                 </div>
@@ -582,62 +1118,95 @@
 
                     <div className="max-w-7xl mx-auto px-4 py-6">
                         {!examStarted && !showResults ? (
-                            <div className={`${cardClass} rounded-3xl shadow-2xl p-8 max-w-2xl mx-auto`}>
-                                <div className="text-center mb-8">
-                                    <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                                        <div className="w-12 h-12 text-white"><Upload /></div>
+                            <div className="space-y-6">
+                                {/* Main Upload Card */}
+                                <div className={`${cardClass} rounded-3xl shadow-2xl p-8 max-w-2xl mx-auto`}>
+                                    <div className="text-center mb-8">
+                                        <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                            <div className="w-12 h-12 text-white"><Upload /></div>
+                                        </div>
+                                        <h2 className="text-3xl font-bold mb-2">AWS Cloud Practitioner Exam</h2>
+                                        <p className="opacity-75">Upload question bank and answer key to start your practice</p>
                                     </div>
-                                    <h2 className="text-3xl font-bold mb-2">AWS Cloud Practitioner Exam</h2>
-                                    <p className="opacity-75">Upload question bank and answer key to start your practice</p>
-                                </div>
 
-                                <div className="space-y-6">
-                                    <div>
-                                        <label className="block text-lg font-semibold mb-3">Question Bank</label>
-                                        <label className={`block w-full px-6 py-8 border-2 border-dashed rounded-2xl cursor-pointer transition transform hover:scale-105 ${questions.length > 0
-                                            ? 'border-green-500 bg-green-50'
-                                            : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
-                                            }`}>
-                                            <input type="file" accept=".txt" onChange={handleQuestionUpload} className="hidden" />
-                                            <div className="text-center">
-                                                <div className={`w-12 h-12 mx-auto mb-3 ${questions.length > 0 ? 'text-green-500' : 'text-gray-400'}`}>
-                                                    {questions.length > 0 ? <CheckCircle /> : <Upload />}
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="block text-lg font-semibold mb-3">Question Bank</label>
+                                            <label className={`block w-full px-6 py-8 border-2 border-dashed rounded-2xl cursor-pointer transition transform hover:scale-105 ${questions.length > 0
+                                                ? 'border-green-500 bg-green-50'
+                                                : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
+                                                }`}>
+                                                <input type="file" accept=".txt" onChange={handleQuestionUpload} className="hidden" />
+                                                <div className="text-center">
+                                                    <div className={`w-12 h-12 mx-auto mb-3 ${questions.length > 0 ? 'text-green-500' : 'text-gray-400'}`}>
+                                                        {questions.length > 0 ? <CheckCircle /> : <Upload />}
+                                                    </div>
+                                                    <p className="font-medium">{questions.length > 0 ? `${questions.length} Questions Loaded` : 'Click to upload questions'}</p>
                                                 </div>
-                                                <p className="font-medium">{questions.length > 0 ? `${questions.length} Questions Loaded` : 'Click to upload questions'}</p>
-                                            </div>
-                                        </label>
-                                    </div>
+                                            </label>
+                                        </div>
 
-                                    <div>
-                                        <label className="block text-lg font-semibold mb-3">Answer Key</label>
-                                        <label className={`block w-full px-6 py-8 border-2 border-dashed rounded-2xl cursor-pointer transition transform hover:scale-105 ${answers.length > 0
-                                            ? 'border-green-500 bg-green-50'
-                                            : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
-                                            }`}>
-                                            <input type="file" accept=".txt" onChange={handleAnswerUpload} className="hidden" />
-                                            <div className="text-center">
-                                                <div className={`w-12 h-12 mx-auto mb-3 ${answers.length > 0 ? 'text-green-500' : 'text-gray-400'}`}>
-                                                    {answers.length > 0 ? <CheckCircle /> : <Upload />}
+                                        <div>
+                                            <label className="block text-lg font-semibold mb-3">Answer Key</label>
+                                            <label className={`block w-full px-6 py-8 border-2 border-dashed rounded-2xl cursor-pointer transition transform hover:scale-105 ${answers.length > 0
+                                                ? 'border-green-500 bg-green-50'
+                                                : darkMode ? 'border-gray-600 bg-gray-700 hover:bg-gray-600' : 'border-gray-300 hover:bg-gray-50'
+                                                }`}>
+                                                <input type="file" accept=".txt" onChange={handleAnswerUpload} className="hidden" />
+                                                <div className="text-center">
+                                                    <div className={`w-12 h-12 mx-auto mb-3 ${answers.length > 0 ? 'text-green-500' : 'text-gray-400'}`}>
+                                                        {answers.length > 0 ? <CheckCircle /> : <Upload />}
+                                                    </div>
+                                                    <p className="font-medium">{answers.length > 0 ? `${answers.length} Answers Loaded` : 'Click to upload answers'}</p>
                                                 </div>
-                                                <p className="font-medium">{answers.length > 0 ? `${answers.length} Answers Loaded` : 'Click to upload answers'}</p>
-                                            </div>
-                                        </label>
-                                    </div>
+                                            </label>
+                                        </div>
 
-                                    <button
-                                        onClick={startExam}
-                                        disabled={questions.length === 0 || answers.length === 0}
-                                        className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl transform hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                                    >
-                                        🚀 Start AWS Practice Exam
-                                    </button>
-
-                                    {examHistory.length > 0 && (
-                                        <button onClick={() => setShowStats(true)} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl transform hover:scale-105 transition">
-                                            📊 View History & Analytics
+                                        <button
+                                            onClick={generateSampleQuestions}
+                                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-xl font-bold hover:shadow-xl transform hover:scale-105 transition"
+                                        >
+                                            🚀 Load Sample Questions
                                         </button>
-                                    )}
+
+                                        <button
+                                            onClick={startExam}
+                                            disabled={questions.length === 0 || answers.length === 0}
+                                            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl transform hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                        >
+                                            🚀 Start AWS Practice Exam
+                                        </button>
+                                    </div>
                                 </div>
+
+                                {/* Show recent exam history for quick access */}
+                                {examHistory.length > 0 && (
+                                    <div className={`${cardClass} rounded-2xl p-6 shadow-lg max-w-2xl mx-auto`}>
+                                        <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
+                                            <History />
+                                            <span>Recent Exam History</span>
+                                        </h3>
+                                        <div className="space-y-3">
+                                            {examHistory.slice(0, 3).map((exam, index) => (
+                                                <div key={index} className="border rounded-lg p-4 hover:shadow-md transition cursor-pointer"
+                                                    onClick={() => setSelectedHistoryExam(exam)}>
+                                                    <div className="flex justify-between items-center">
+                                                        <div>
+                                                            <h4 className="font-bold">{exam.examTitle}</h4>
+                                                            <p className="text-sm text-gray-500">{new Date(exam.dateCreated).toLocaleString()}</p>
+                                                        </div>
+                                                        <div className="text-right">
+                                                            <p className={`text-lg font-bold ${exam.percentage >= 70 ? 'text-green-600' : 'text-red-600'}`}>
+                                                                {exam.score}/{exam.totalQuestions} ({exam.percentage}%)
+                                                            </p>
+                                                            <p className="text-sm">Click to review</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         ) : showResults ? (
                             <div className="space-y-6">
@@ -674,14 +1243,6 @@
                                             <div className="w-5 h-5"><Eye /></div>
                                             <span>Review Answers</span>
                                         </button>
-                                        <button onClick={() => setShowTopicAnalysis(true)} className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-bold hover:shadow-xl transform hover:scale-105 transition flex items-center space-x-2">
-                                            <div className="w-5 h-5"><BarChart /></div>
-                                            <span>Topic Analysis</span>
-                                        </button>
-                                        <button onClick={exportResults} className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-bold hover:shadow-xl transform hover:scale-105 transition flex items-center space-x-2">
-                                            <div className="w-5 h-5"><Download /></div>
-                                            <span>Export Results</span>
-                                        </button>
                                         <button onClick={resetExam} className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-bold hover:shadow-xl transform hover:scale-105 transition flex items-center space-x-2">
                                             <div className="w-5 h-5"><RotateCcw /></div>
                                             <span>Try Again</span>
@@ -689,86 +1250,10 @@
                                     </div>
                                 </div>
 
-                                {showReview && (
-                                    <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
-                                        <h3 className="text-2xl font-bold mb-6">Answer Review</h3>
-                                        <div className="space-y-6">
-                                            {questions.map((q, idx) => {
-                                                const userAns = userAnswers[idx] || 'Not Answered';
-                                                const correctAns = answers[idx];
-                                                const userAnswerNorm = userAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                                                const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                                                const isCorrect = userAnswerNorm === correctAnswerNorm;
-
-                                                return (
-                                                    <div key={idx} className={`p-6 rounded-xl border-2 ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
-                                                        <div className="flex items-start space-x-4">
-                                                            <div className={`w-8 h-8 flex-shrink-0 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
-                                                                {isCorrect ? <CheckCircle /> : <XCircle />}
-                                                            </div>
-                                                            <div className="flex-1">
-                                                                <p className="font-semibold text-lg mb-3">Question {idx + 1}: {q.question}</p>
-                                                                
-                                                                {/* Display Options */}
-                                                                <div className="mb-4">
-                                                                    <p className="font-medium mb-2">Options:</p>
-                                                                    <div className="space-y-2">
-                                                                        {q.options.map((option, optIdx) => {
-                                                                            const optionLetter = String.fromCharCode(65 + optIdx);
-                                                                            const isCorrectOption = correctAns.split(',').map(a => a.trim()).includes(optionLetter);
-                                                                            const isUserSelected = userAns.split(',').map(a => a.trim()).includes(optionLetter);
-                                                                            
-                                                                            let optionClass = "p-3 rounded-lg border-2 ";
-                                                                            if (isCorrectOption && isUserSelected) {
-                                                                                optionClass += "border-green-500 bg-green-100";
-                                                                            } else if (isCorrectOption) {
-                                                                                optionClass += "border-green-500 bg-green-50";
-                                                                            } else if (isUserSelected) {
-                                                                                optionClass += "border-red-500 bg-red-100";
-                                                                            } else {
-                                                                                optionClass += darkMode ? "border-gray-600 bg-gray-700" : "border-gray-300 bg-gray-50";
-                                                                            }
-                                                                            
-                                                                            return (
-                                                                                <div key={optIdx} className={optionClass}>
-                                                                                    <div className="flex items-center space-x-3">
-                                                                                        <span className="font-semibold">{optionLetter}.</span>
-                                                                                        <span>{option}</span>
-                                                                                        {isCorrectOption && <span className="text-green-600 font-bold">✓ Correct</span>}
-                                                                                        {isUserSelected && !isCorrectOption && <span className="text-red-600 font-bold">✗ Your Choice</span>}
-                                                                                    </div>
-                                                                                </div>
-                                                                            );
-                                                                        })}
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                                {/* Display Answer Summary */}
-                                                                <div className="space-y-2 text-sm">
-                                                                    <p><strong>Your Answer:</strong> 
-                                                                        <span className={isCorrect ? 'text-green-700 font-bold' : 'text-red-700 font-bold'}>
-                                                                            {userAns || 'Not Answered'}
-                                                                        </span>
-                                                                    </p>
-                                                                    <p><strong>Correct Answer:</strong> 
-                                                                        <span className="text-green-700 font-bold">{correctAns}</span>
-                                                                    </p>
-                                                                    <p><strong>Status:</strong> 
-                                                                        <span className={isCorrect ? 'text-green-700 font-bold' : 'text-red-700 font-bold'}>
-                                                                            {isCorrect ? ' ✓ CORRECT' : ' ✗ WRONG'}
-                                                                        </span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                )}
+                                {showReview && <AnswerReview />}
                             </div>
                         ) : (
+                            // Exam Interface
                             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                                 <div className="lg:col-span-3 space-y-6">
                                     <div className={`${cardClass} rounded-2xl p-6 shadow-lg`}>
@@ -815,12 +1300,6 @@
                                             })}
                                         </div>
 
-                                        {answers[currentQuestion] && answers[currentQuestion].split(',').filter(a => a.trim()).length > 1 && (
-                                            <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                                                <p className="text-sm text-yellow-800">ℹ️ This is a multiple-choice question. Select all correct answers.</p>
-                                            </div>
-                                        )}
-
                                         <div className="flex justify-between">
                                             <button
                                                 onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
@@ -846,24 +1325,6 @@
                                                 </button>
                                             )}
                                         </div>
-                                    </div>
-
-                                    <div className={`${cardClass} rounded-2xl p-4 shadow-lg`}>
-                                        <div className="flex items-center justify-between mb-4">
-                                            <h3 className="font-bold">Notes</h3>
-                                            <button onClick={() => setShowNotes(!showNotes)} className="text-blue-600 hover:text-blue-700">
-                                                {showNotes ? 'Hide' : 'Show'}
-                                            </button>
-                                        </div>
-                                        {showNotes && (
-                                            <textarea
-                                                value={notes[currentQuestion] || ''}
-                                                onChange={(e) => setNotes({ ...notes, [currentQuestion]: e.target.value })}
-                                                placeholder="Add notes for this question..."
-                                                className={`w-full p-3 rounded-lg border-2 ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'} focus:border-blue-500 outline-none transition`}
-                                                rows="3"
-                                            />
-                                        )}
                                     </div>
                                 </div>
 
@@ -937,119 +1398,77 @@
                         )}
                     </div>
 
-                    {/* Topic Analysis Modal (unchanged) */}
-                    {showTopicAnalysis && (
+                    {/* Stats Modal with Full History */}
+                    {showStats && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-                            <div className={`${cardClass} rounded-2xl p-8 max-w-4xl w-full shadow-2xl my-8 max-h-[90vh] overflow-y-auto`}>
+                            <div className={`${cardClass} rounded-2xl p-8 max-w-4xl w-full shadow-2xl my-8`}>
                                 <div className="flex justify-between items-center mb-6">
-                                    <h3 className="text-2xl font-bold">AWS Topic Analysis</h3>
-                                    <button onClick={() => setShowTopicAnalysis(false)} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                                    <h3 className="text-2xl font-bold">Your Complete Exam History</h3>
+                                    <button onClick={() => setShowStats(false)} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
                                 </div>
 
-                                {Object.keys(topicAnalysis).length > 0 ? (
-                                    <div className="space-y-6">
-                                        {/* Weak and Strong Topics Summary */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className={`p-6 rounded-xl ${darkMode ? 'bg-red-900/20 border border-red-800' : 'bg-red-50 border border-red-200'}`}>
-                                                <h4 className="text-lg font-bold text-red-600 mb-4">🚨 Areas Needing Improvement</h4>
-                                                {getWeakStrongTopics(topicAnalysis).weakTopics.length > 0 ? (
-                                                    <div className="space-y-3">
-                                                        {getWeakStrongTopics(topicAnalysis).weakTopics.map((topic, idx) => (
-                                                            <div key={idx} className="flex justify-between items-center">
-                                                                <span className="font-medium">{topic.domain}</span>
-                                                                <span className={`px-3 py-1 rounded-full text-sm font-bold ${topic.percentage < 50 ? 'bg-red-500 text-white' : 'bg-yellow-500 text-white'}`}>
-                                                                    {topic.percentage}%
-                                                                </span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                ) : (
-                                                    <p className="text-gray-500">No weak topics identified</p>
-                                                )}
+                                {examHistory.length > 0 ? (
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                            <div className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                                                <p className="text-sm opacity-75">Total Attempts</p>
+                                                <p className="text-2xl font-bold text-blue-600">{examHistory.length}</p>
                                             </div>
-
-                                            <div className={`p-6 rounded-xl ${darkMode ? 'bg-green-900/20 border border-green-800' : 'bg-green-50 border border-green-200'}`}>
-                                                <h4 className="text-lg font-bold text-green-600 mb-4">💪 Strong Areas</h4>
-                                                {getWeakStrongTopics(topicAnalysis).strongTopics.length > 0 ? (
-                                                    <div className="space-y-3">
-                                                        {getWeakStrongTopics(topicAnalysis).strongTopics.map((topic, idx) => (
-                                                            <div key={idx} className="flex justify-between items-center">
-                                                                <span className="font-medium">{topic.domain}</span>
-                                                                <span className="px-3 py-1 bg-green-500 text-white rounded-full text-sm font-bold">
-                                                                    {topic.percentage}%
-                                                                </span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                ) : (
-                                                    <p className="text-gray-500">No strong topics identified</p>
-                                                )}
+                                            <div className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                                                <p className="text-sm opacity-75">Average Score</p>
+                                                <p className="text-2xl font-bold text-green-600">
+                                                    {(examHistory.reduce((sum, h) => sum + parseFloat(h.percentage), 0) / examHistory.length).toFixed(1)}%
+                                                </p>
+                                            </div>
+                                            <div className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                                                <p className="text-sm opacity-75">Best Score</p>
+                                                <p className="text-2xl font-bold text-purple-600">
+                                                    {Math.max(...examHistory.map(h => parseFloat(h.percentage)))}%
+                                                </p>
                                             </div>
                                         </div>
 
-                                        {/* Detailed Topic Breakdown */}
-                                        <div>
-                                            <h4 className="text-xl font-bold mb-4">Detailed Performance by Domain</h4>
-                                            <div className="space-y-4">
-                                                {Object.entries(topicAnalysis)
-                                                    .filter(([domain, data]) => data.total > 0)
-                                                    .sort(([, a], [, b]) => b.percentage - a.percentage)
-                                                    .map(([domain, data]) => (
-                                                        <div key={domain} className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                                                            <div className="flex justify-between items-center mb-2">
-                                                                <div>
-                                                                    <h5 className="font-bold text-lg">{domain}</h5>
-                                                                    <p className="text-sm opacity-75">{AWS_DOMAINS[domain]?.description || 'General AWS knowledge'}</p>
-                                                                </div>
-                                                                <div className="text-right">
-                                                                    <span className={`text-2xl font-bold ${data.percentage >= 80 ? 'text-green-600' :
-                                                                            data.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-                                                                        }`}>
-                                                                        {data.percentage}%
-                                                                    </span>
-                                                                    <p className="text-sm">{data.correct}/{data.total} correct</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className={`h-3 ${darkMode ? 'bg-gray-600' : 'bg-gray-200'} rounded-full overflow-hidden`}>
-                                                                <div
-                                                                    className={`h-full ${data.percentage >= 80 ? 'bg-green-500' :
-                                                                            data.percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-                                                                        } transition-all duration-500`}
-                                                                    style={{ width: `${data.percentage}%` }}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                            </div>
-                                        </div>
-
-                                        {/* Study Recommendations */}
-                                        <div className={`p-6 rounded-xl ${darkMode ? 'bg-blue-900/20 border border-blue-800' : 'bg-blue-50 border border-blue-200'}`}>
-                                            <h4 className="text-lg font-bold text-blue-600 mb-4">📚 Study Recommendations</h4>
-                                            <div className="space-y-3">
-                                                {getWeakStrongTopics(topicAnalysis).weakTopics.map((topic, idx) => (
-                                                    <div key={idx} className="flex items-start space-x-3">
-                                                        <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-sm mt-1 flex-shrink-0">!</div>
+                                        <div className="space-y-3 max-h-96 overflow-y-auto">
+                                            {examHistory.map((exam, idx) => (
+                                                <div key={idx} className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} hover:shadow-lg transition cursor-pointer`}
+                                                    onClick={() => {
+                                                        setSelectedHistoryExam(exam);
+                                                        setShowStats(false);
+                                                    }}>
+                                                    <div className="flex justify-between items-center">
                                                         <div>
-                                                            <p className="font-medium">{topic.domain}</p>
-                                                            <p className="text-sm opacity-75">
-                                                                Focus on {AWS_DOMAINS[topic.domain]?.description.toLowerCase()}.
-                                                                Practice more questions in this area.
+                                                            <h4 className="font-bold">{exam.examTitle}</h4>
+                                                            <p className="text-sm opacity-75">{new Date(exam.dateCreated).toLocaleString()}</p>
+                                                        </div>
+                                                        <div className="text-right">
+                                                            <p className={`text-2xl font-bold ${parseFloat(exam.percentage) >= 70 ? 'text-green-600' : 'text-red-600'}`}>
+                                                                {exam.percentage}%
                                                             </p>
+                                                            <p className="text-sm">{exam.score}/{exam.totalQuestions}</p>
+                                                            <p className="text-xs text-blue-600 mt-1">Click to review full exam</p>
                                                         </div>
                                                     </div>
-                                                ))}
-                                            </div>
+                                                    <div className="mt-2 flex items-center space-x-4 text-sm">
+                                                        <span className="flex items-center space-x-1">
+                                                            <Clock />
+                                                            <span>{formatTime(exam.timeSpent)}</span>
+                                                        </span>
+                                                        <span className={`px-3 py-1 rounded-full ${parseFloat(exam.percentage) >= 70 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                                            {parseFloat(exam.percentage) >= 70 ? 'Pass ✓' : 'Fail ✗'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 ) : (
-                                    <p className="text-center text-gray-500 py-8">No topic analysis available</p>
+                                    <p className="text-center text-gray-500 py-8">No exam history available</p>
                                 )}
                             </div>
                         </div>
                     )}
 
-                    {/* Existing modals for confirm submit and stats remain the same */}
+                    {/* Confirm Submit Modal */}
                     {showConfirmSubmit && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                             <div className={`${cardClass} rounded-2xl p-8 max-w-md w-full shadow-2xl transform scale-100 animate-pulse`}>
@@ -1088,70 +1507,6 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {showStats && (
-                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-                            <div className={`${cardClass} rounded-2xl p-8 max-w-4xl w-full shadow-2xl my-8`}>
-                                <div className="flex justify-between items-center mb-6">
-                                    <h3 className="text-2xl font-bold">AWS Exam History</h3>
-                                    <button onClick={() => setShowStats(false)} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
-                                </div>
-
-                                {examHistory.length > 0 ? (
-                                    <div className="space-y-4">
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                            <div className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                                                <p className="text-sm opacity-75">Total Attempts</p>
-                                                <p className="text-2xl font-bold text-blue-600">{examHistory.length}</p>
-                                            </div>
-                                            <div className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                                                <p className="text-sm opacity-75">Average Score</p>
-                                                <p className="text-2xl font-bold text-green-600">
-                                                    {(examHistory.reduce((sum, h) => sum + parseFloat(h.percentage), 0) / examHistory.length).toFixed(1)}%
-                                                </p>
-                                            </div>
-                                            <div className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                                                <p className="text-sm opacity-75">Best Score</p>
-                                                <p className="text-2xl font-bold text-purple-600">
-                                                    {Math.max(...examHistory.map(h => parseFloat(h.percentage)))}%
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3 max-h-96 overflow-y-auto">
-                                            {examHistory.map((exam, idx) => (
-                                                <div key={idx} className={`p-4 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} hover:shadow-lg transition`}>
-                                                    <div className="flex justify-between items-center">
-                                                        <div>
-                                                            <h4 className="font-bold">{exam.examTitle}</h4>
-                                                            <p className="text-sm opacity-75">{exam.date}</p>
-                                                        </div>
-                                                        <div className="text-right">
-                                                            <p className={`text-2xl font-bold ${parseFloat(exam.percentage) >= 70 ? 'text-green-600' : 'text-red-600'}`}>
-                                                                {exam.percentage}%
-                                                            </p>
-                                                            <p className="text-sm">{exam.score}/{exam.total}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2 flex items-center space-x-4 text-sm">
-                                                        <span className="flex items-center space-x-1">
-                                                            <div className="w-4 h-4"><Clock /></div>
-                                                            <span>{formatTime(exam.timeSpent)}</span>
-                                                        </span>
-                                                        <span className={`px-3 py-1 rounded-full ${parseFloat(exam.percentage) >= 70 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                                                            {parseFloat(exam.percentage) >= 70 ? 'Pass ✓' : 'Fail ✗'}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <p className="text-center text-gray-500 py-8">No AWS exam history available</p>
-                                )}
                             </div>
                         </div>
                     )}
