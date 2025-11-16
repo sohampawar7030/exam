@@ -18,7 +18,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // SVG Icons
+        // SVG Icons (keep all existing icons)
         const Upload = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>);
         const CheckCircle = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>);
         const XCircle = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" /></svg>);
@@ -44,7 +44,8 @@
         const TrendingUp = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>);
         const Calculator = () => (<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="10" x2="16" y2="10" /><line x1="8" y1="14" x2="12" y2="14" /><line x1="16" y1="14" x2="16" y2="18" /></svg>);
 
-        // AWS Cloud Practitioner Domains
+
+        // AWS Cloud Practitioner Domains (keep existing domains)
         const awsDomains = [
             {
                 name: "Domain 1: Cloud Concepts (24%)",
@@ -109,7 +110,7 @@
             }
         ];
 
-        // Aptitude and Reasoning Topics
+        // Aptitude and Reasoning Topics (keep existing)
         const aptitudeTopics = [
             {
                 name: "Quantitative Aptitude",
@@ -415,6 +416,7 @@
                     if (currentQuestion && !currentQuestion.question && line &&
                         !line.startsWith('A. ') && !line.startsWith('B. ') &&
                         !line.startsWith('C. ') && !line.startsWith('D. ') &&
+                        !line.startsWith('E. ') && !line.startsWith('F. ') &&
                         !line.startsWith('Correct Answer:') &&
                         !line.startsWith('Community vote distribution')) {
                         currentQuestion.question = line;
@@ -423,7 +425,8 @@
 
                     // Detect options
                     if (line.startsWith('A. ') || line.startsWith('B. ') ||
-                        line.startsWith('C. ') || line.startsWith('D. ')) {
+                        line.startsWith('C. ') || line.startsWith('D. ') ||
+                        line.startsWith('E. ') || line.startsWith('F. ')) {
                         if (currentQuestion) {
                             currentQuestion.options.push(line);
                         }
@@ -435,7 +438,7 @@
                         if (currentQuestion) {
                             const answer = line.replace('Correct Answer:', '').trim();
                             currentQuestion.answer = answer;
-                            currentQuestion.isMultiSelect = answer.includes(',');
+                            currentQuestion.isMultiSelect = answer.includes(',') || answer.split('').filter(a => a.trim()).length > 1;
                         }
                         continue;
                     }
@@ -490,7 +493,7 @@
             // Enhanced PYQ Practice with question count selection and shuffling
             const startPyqPractice = (pyqSet, count = null) => {
                 const questionCount = count || pyqQuestionCount;
-                
+
                 if (!pyqSet || !pyqSet.questions || pyqSet.questions.length === 0) {
                     alert('No questions available in this PYQ set');
                     return;
@@ -498,10 +501,10 @@
 
                 // Shuffle the questions array
                 const shuffledQuestions = [...pyqSet.questions].sort(() => Math.random() - 0.5);
-                
+
                 // Take the requested number of questions (or all if less than requested)
                 const selectedQuestions = shuffledQuestions.slice(0, Math.min(questionCount, pyqSet.questions.length));
-                
+
                 setSelectedPyqSet(pyqSet);
                 setQuestions(selectedQuestions);
                 setAnswers(selectedQuestions.map(q => q.answer));
@@ -530,7 +533,7 @@
                 }
             };
 
-            // AI Question Generation
+            // AI Question Generation with enhanced multiple selection support
             const generateQuestionsWithAI = async (domains, count, difficulty, examType) => {
                 setGeneratingQuestions(true);
 
@@ -538,12 +541,15 @@
                     // Extract topics from selected domains
                     const selectedTopics = domains.flatMap(domain => domain.topics);
 
-                    // Create a prompt for the AI
+                    // Create a prompt for the AI with enhanced multiple selection support
                     const prompt = `Generate ${count} multiple-choice questions for AWS Cloud Practitioner exam focusing on: ${selectedTopics.join(', ')}. 
                     Difficulty level: ${difficulty}. 
-                    Format: Each question should have a question text and 4 options (A, B, C, D). 
-                    Provide the correct answer for each question. 
-                    IMPORTANT: 30% of questions should be multi-select (with 2 or 3 correct answers). Format multi-select answers as comma-separated letters (e.g., "A,C").
+                    Format: 
+                    - For single-answer questions: Provide exactly 4 options (A, B, C, D)
+                    - For "choose two" questions: Provide exactly 5 options (A, B, C, D, E) with exactly 2 correct answers
+                    - For "choose three" questions: Provide exactly 6 options (A, B, C, D, E, F) with exactly 3 correct answers
+                    - 30% of questions should be multi-select (with 2 or 3 correct answers). Format multi-select answers as comma-separated letters (e.g., "A,C" or "B,D,F").
+                    - Include the phrase "Choose two" or "Choose three" in the question text for multi-select questions
                     Format the response as JSON: { "questions": [ { "question": "question text", "options": ["A. option1", "B. option2", "C. option3", "D. option4"], "answer": "A" } ] }`;
 
                     const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCR5TIp-MG3WmAiHZkCPXrKvHVYAMjcsoU', {
@@ -611,20 +617,20 @@
                         setCurrentQuestion(0);
                         setFlaggedQuestions(new Set());
                     } else {
-                        // Fallback to sample questions if parsing fails
-                        console.error('Failed to parse AI response, using sample questions');
-                        generateSampleQuestions();
+                        // Fallback to enhanced sample questions if parsing fails
+                        console.error('Failed to parse AI response, using enhanced sample questions');
+                        generateEnhancedSampleQuestions();
                     }
                 } catch (error) {
                     console.error('Error generating questions with AI:', error);
-                    // Fallback to sample questions
-                    generateSampleQuestions();
+                    // Fallback to enhanced sample questions
+                    generateEnhancedSampleQuestions();
                 } finally {
                     setGeneratingQuestions(false);
                 }
             };
 
-            // Generate Aptitude Questions
+            // Generate Aptitude Questions with enhanced multiple selection support
             const generateAptitudeQuestions = async (topics, count, difficulty) => {
                 setGeneratingQuestions(true);
 
@@ -632,11 +638,15 @@
                     // Extract topics from selected aptitude areas
                     const selectedTopics = topics.flatMap(topic => topic.topics);
 
-                    // Create a prompt for the AI
+                    // Create a prompt for the AI with enhanced multiple selection support
                     const prompt = `Generate ${count} multiple-choice aptitude and reasoning questions focusing on: ${selectedTopics.join(', ')}. 
                     Difficulty level: ${difficulty}. 
-                    Format: Each question should have a question text and 4 options (A, B, C, D). 
-                    Provide the correct answer for each question. 
+                    Format: 
+                    - For single-answer questions: Provide exactly 4 options (A, B, C, D)
+                    - For "choose two" questions: Provide exactly 5 options (A, B, C, D, E) with exactly 2 correct answers
+                    - For "choose three" questions: Provide exactly 6 options (A, B, C, D, E, F) with exactly 3 correct answers
+                    - 20% of questions should be multi-select (with 2 or 3 correct answers). Format multi-select answers as comma-separated letters (e.g., "A,C" or "B,D,F").
+                    - Include the phrase "Choose two" or "Choose three" in the question text for multi-select questions
                     Format the response as JSON: { "questions": [ { "question": "question text", "options": ["A. option1", "B. option2", "C. option3", "D. option4"], "answer": "A" } ] }`;
 
                     const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCR5TIp-MG3WmAiHZkCPXrKvHVYAMjcsoU', {
@@ -675,7 +685,7 @@
                         const newQuestions = parsedData.questions.map(q => ({
                             question: q.question,
                             options: q.options,
-                            isMultiSelect: false // Aptitude questions are typically single-select
+                            isMultiSelect: q.answer.includes(',') // Check if it's multi-select
                         }));
 
                         const newAnswers = parsedData.questions.map(q => q.answer);
@@ -696,14 +706,14 @@
                         setFlaggedQuestions(new Set());
                         setExamType('aptitude');
                     } else {
-                        // Fallback to sample aptitude questions if parsing fails
-                        console.error('Failed to parse AI response, using sample questions');
-                        generateSampleAptitudeQuestions();
+                        // Fallback to enhanced sample aptitude questions if parsing fails
+                        console.error('Failed to parse AI response, using enhanced sample questions');
+                        generateEnhancedSampleAptitudeQuestions();
                     }
                 } catch (error) {
                     console.error('Error generating aptitude questions with AI:', error);
-                    // Fallback to sample aptitude questions
-                    generateSampleAptitudeQuestions();
+                    // Fallback to enhanced sample aptitude questions
+                    generateEnhancedSampleAptitudeQuestions();
                 } finally {
                     setGeneratingQuestions(false);
                 }
@@ -808,7 +818,8 @@
                 setShowExplanation(true);
             };
 
-            const generateSampleQuestions = () => {
+            // Enhanced Sample Questions with proper multiple selection support
+            const generateEnhancedSampleQuestions = () => {
                 const sampleQuestions = [
                     {
                         question: "What is the main benefit of cloud computing?",
@@ -831,25 +842,49 @@
                         isMultiSelect: false
                     },
                     {
-                        question: "Which of the following are characteristics of cloud computing? (Select TWO)",
+                        question: "Which of the following are characteristics of cloud computing? (Choose two)",
                         options: [
                             "On-demand self-service",
                             "Limited scalability",
                             "Resource pooling",
-                            "Manual provisioning"
+                            "Manual provisioning",
+                            "Rapid elasticity"
+                        ],
+                        isMultiSelect: true
+                    },
+                    {
+                        question: "Which AWS services and features are provided to all customers at no charge? (Choose two)",
+                        options: [
+                            "Amazon Aurora",
+                            "VPC",
+                            "Amazon SageMaker",
+                            "AWS Identity and Access Management (IAM)",
+                            "Amazon Polly"
+                        ],
+                        isMultiSelect: true
+                    },
+                    {
+                        question: "What are the three pillars of the AWS Well-Architected Framework? (Choose three)",
+                        options: [
+                            "Operational Excellence",
+                            "Security",
+                            "Reliability",
+                            "Performance Efficiency",
+                            "Cost Optimization",
+                            "Sustainability"
                         ],
                         isMultiSelect: true
                     }
                 ];
 
-                const sampleAnswers = ["C", "C", "A,C"];
+                const sampleAnswers = ["C", "C", "A,C", "D,E", "A,B,D"];
 
                 setQuestions(sampleQuestions);
                 setAnswers(sampleAnswers);
                 setExamTitle('AWS Cloud Practitioner Exam');
                 setPracticeMode(true);
                 setExamStarted(true);
-                setTimeLeft(180); // 3 minutes for sample
+                setTimeLeft(300); // 5 minutes for sample
                 setUserAnswers({});
                 setShowResults(false);
                 setCurrentQuestion(0);
@@ -857,7 +892,8 @@
                 setExamType('aws');
             };
 
-            const generateSampleAptitudeQuestions = () => {
+            // Enhanced Sample Aptitude Questions with proper multiple selection support
+            const generateEnhancedSampleAptitudeQuestions = () => {
                 const sampleQuestions = [
                     {
                         question: "If a shirt costs $20 after a 20% discount, what was its original price?",
@@ -888,17 +924,40 @@
                             "Some flowers that fade quickly are roses"
                         ],
                         isMultiSelect: false
+                    },
+                    {
+                        question: "Which of the following numbers are prime? (Choose two)",
+                        options: [
+                            "15",
+                            "17",
+                            "21",
+                            "23",
+                            "27"
+                        ],
+                        isMultiSelect: true
+                    },
+                    {
+                        question: "Which of the following are valid logical reasoning patterns? (Choose three)",
+                        options: [
+                            "Deductive reasoning",
+                            "Inductive reasoning",
+                            "Abductive reasoning",
+                            "Reductive reasoning",
+                            "Conductive reasoning",
+                            "Speculative reasoning"
+                        ],
+                        isMultiSelect: true
                     }
                 ];
 
-                const sampleAnswers = ["B", "B", "D"];
+                const sampleAnswers = ["B", "B", "D", "B,D", "A,B,C"];
 
                 setQuestions(sampleQuestions);
                 setAnswers(sampleAnswers);
                 setExamTitle('Aptitude Practice Test');
                 setPracticeMode(true);
                 setExamStarted(true);
-                setTimeLeft(180); // 3 minutes for sample
+                setTimeLeft(300); // 5 minutes for sample
                 setUserAnswers({});
                 setShowResults(false);
                 setCurrentQuestion(0);
@@ -909,7 +968,37 @@
             const handleAnswerSelect = (questionIndex, option) => {
                 const question = questions[questionIndex];
                 const correctAnswer = answers[questionIndex] || '';
-                const isMultipleChoice = question.isMultiSelect || correctAnswer.split(',').filter(a => a.trim()).length > 1;
+
+                // Enhanced multi-select detection for PYQ questions
+                let isMultipleChoice = question.isMultiSelect;
+
+                // For PYQ questions, detect multi-select based on correct answer format
+                if (examType === 'pyq') {
+                    // Check if correct answer has multiple options (comma-separated)
+                    const correctAnswers = correctAnswer.split(',').map(a => a.trim()).filter(a => a);
+                    isMultipleChoice = correctAnswers.length > 1;
+
+                    // Also check if question text indicates multiple selection
+                    if (!isMultipleChoice) {
+                        const questionText = question.question.toLowerCase();
+                        isMultipleChoice = questionText.includes('choose two') ||
+                            questionText.includes('choose three') ||
+                            questionText.includes('select all') ||
+                            questionText.includes('multiple answers') ||
+                            questionText.includes('which of the following are') ||
+                            questionText.includes('which are') ||
+                            questionText.includes('select the') ||
+                            questionText.includes('pick the');
+                    }
+
+                    // Additional check: if there are more than 4 options, it's likely multi-select
+                    if (!isMultipleChoice && question.options && question.options.length > 4) {
+                        isMultipleChoice = true;
+                    }
+                } else {
+                    // For other exam types, use existing logic
+                    isMultipleChoice = question.isMultiSelect || correctAnswer.split(',').filter(a => a.trim()).length > 1;
+                }
 
                 if (isMultipleChoice) {
                     const currentAnswers = userAnswers[questionIndex] ? userAnswers[questionIndex].split(',').map(a => a.trim()).filter(a => a) : [];
@@ -998,19 +1087,44 @@
                 return performance;
             };
 
+
             const handleSubmit = () => {
                 let correct = 0;
                 questions.forEach((q, idx) => {
                     const userAnswer = (userAnswers[idx] || '').trim();
                     const correctAnswer = (answers[idx] || '').trim();
 
-                    const normalizedUserAnswer = userAnswer.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
-                    const normalizedCorrectAnswer = correctAnswer.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
+                    // Enhanced normalization for multi-select answers
+                    const normalizedUserAnswer = userAnswer
+                        .split(',')
+                        .map(a => a.trim())
+                        .filter(a => a)
+                        .sort()
+                        .join(',')
+                        .toUpperCase();
+
+                    const normalizedCorrectAnswer = correctAnswer
+                        .split(',')
+                        .map(a => a.trim())
+                        .filter(a => a)
+                        .sort()
+                        .join(',')
+                        .toUpperCase();
+
+                    console.log(`Question ${idx + 1}:`, {
+                        userAnswer,
+                        correctAnswer,
+                        normalizedUserAnswer,
+                        normalizedCorrectAnswer,
+                        isEqual: normalizedUserAnswer === normalizedCorrectAnswer
+                    });
 
                     if (normalizedUserAnswer === normalizedCorrectAnswer) {
                         correct++;
                     }
                 });
+
+                // Set the score and show results
                 setScore(correct);
                 setShowResults(true);
                 setExamStarted(false);
@@ -1040,6 +1154,9 @@
                 // Set domain performance for display
                 setDomainPerformance(domainPerformanceData);
             };
+
+
+
 
             const resetExam = () => {
                 setUserAnswers({});
@@ -1087,7 +1204,7 @@
             const cardClass = darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900';
             const headerClass = darkMode ? 'bg-gradient-to-r from-gray-700 to-gray-900' : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600';
 
-            // Domain Analysis Component
+            // Domain Analysis Component (keep existing)
             const DomainAnalysis = () => {
                 if (Object.keys(domainPerformance).length === 0) {
                     return (
@@ -1154,7 +1271,7 @@
                 );
             };
 
-            // Fixed Answer Review Component
+            // Fixed Answer Review Component (keep existing)
             const AnswerReview = () => {
                 const [expandedQuestions, setExpandedQuestions] = useState(new Set());
 
@@ -1187,7 +1304,19 @@
                                 const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
                                 const isCorrect = userAnswerNorm === correctAnswerNorm;
                                 const isExpanded = expandedQuestions.has(idx);
-                                const isMultiSelect = q.isMultiSelect || correctAns.includes(',');
+
+                                // Enhanced multi-select detection for PYQ questions in review
+                                let isMultiSelect = q.isMultiSelect;
+                                if (examType === 'pyq') {
+                                    const correctAnswers = correctAns.split(',').map(a => a.trim()).filter(a => a);
+                                    isMultiSelect = correctAnswers.length > 1 ||
+                                        q.question.toLowerCase().includes('choose two') ||
+                                        q.question.toLowerCase().includes('choose three') ||
+                                        q.question.toLowerCase().includes('select all') ||
+                                        q.question.toLowerCase().includes('multiple answers');
+                                } else {
+                                    isMultiSelect = q.isMultiSelect || correctAns.includes(',');
+                                }
 
                                 return (
                                     <div key={idx} className={`border-2 rounded-lg transition-all duration-300 ${isCorrect
@@ -1317,7 +1446,7 @@
                 );
             };
 
-            // History Exam Review Component
+            // History Exam Review Component (keep existing)
             const HistoryExamReview = ({ exam }) => {
                 const [expandedQuestions, setExpandedQuestions] = useState(new Set());
 
@@ -1360,7 +1489,19 @@
                                 const correctAnswerNorm = correctAns.split(',').map(a => a.trim()).filter(a => a).sort().join(',');
                                 const isCorrect = userAnswerNorm === correctAnswerNorm;
                                 const isExpanded = expandedQuestions.has(idx);
-                                const isMultiSelect = q.isMultiSelect || correctAns.includes(',');
+
+                                // Enhanced multi-select detection for PYQ questions in history review
+                                let isMultiSelect = q.isMultiSelect;
+                                if (exam.examType === 'pyq') {
+                                    const correctAnswers = correctAns.split(',').map(a => a.trim()).filter(a => a);
+                                    isMultiSelect = correctAnswers.length > 1 ||
+                                        q.question.toLowerCase().includes('choose two') ||
+                                        q.question.toLowerCase().includes('choose three') ||
+                                        q.question.toLowerCase().includes('select all') ||
+                                        q.question.toLowerCase().includes('multiple answers');
+                                } else {
+                                    isMultiSelect = q.isMultiSelect || correctAns.includes(',');
+                                }
 
                                 return (
                                     <div key={idx} className={`border-2 rounded-lg transition-all duration-300 ${isCorrect
@@ -1472,7 +1613,7 @@
                 );
             };
 
-            // PYQ Management Component for Teachers
+            // PYQ Management Component for Teachers (keep existing)
             const PyqManagement = () => {
                 return (
                     <div className="space-y-6">
@@ -1509,6 +1650,7 @@ A. Option A
 B. Option B
 C. Option C
 D. Option D
+E. Option E
 Correct Answer: B,C
 Community vote distribution
 BC (95%)`}
@@ -1573,7 +1715,7 @@ BC (95%)`}
                 );
             };
 
-            // PYQ Preview Component
+            // PYQ Preview Component (keep existing)
             const PyqPreview = () => {
                 if (!selectedPyqSet) return null;
 
@@ -1625,7 +1767,7 @@ BC (95%)`}
                 );
             };
 
-            // PYQ Question Count Selector Component
+            // PYQ Question Count Selector Component (keep existing)
             const PyqQuestionCountSelector = () => {
                 if (!selectedPyqSetForPractice) return null;
 
@@ -1634,8 +1776,8 @@ BC (95%)`}
                         <div className={`${cardClass} rounded-2xl p-8 max-w-md w-full shadow-2xl`}>
                             <div className="flex justify-between items-center mb-6">
                                 <h3 className="text-2xl font-bold">Select Question Count</h3>
-                                <button 
-                                    onClick={() => setShowPyqQuestionCountSelector(false)} 
+                                <button
+                                    onClick={() => setShowPyqQuestionCountSelector(false)}
                                     className="text-gray-500 hover:text-gray-700 text-2xl"
                                 >
                                     ×
@@ -1646,7 +1788,7 @@ BC (95%)`}
                                 <p className="mb-4">
                                     <strong>{selectedPyqSetForPractice.name}</strong> has {selectedPyqSetForPractice.questions.length} total questions.
                                 </p>
-                                
+
                                 <label className="block text-lg font-semibold mb-3">Number of Questions to Practice:</label>
                                 <select
                                     value={pyqQuestionCount}
@@ -1690,7 +1832,7 @@ BC (95%)`}
                 );
             };
 
-            // Teacher Dashboard Components
+            // Teacher Dashboard Components (keep existing)
             const TeacherDashboard = () => {
                 const [selectedStudent, setSelectedStudent] = useState(null);
                 const [studentExamHistory, setStudentExamHistory] = useState([]);
@@ -1897,7 +2039,7 @@ BC (95%)`}
                 );
             };
 
-            // Domain Selector Component
+            // Domain Selector Component (keep existing)
             const DomainSelector = () => {
                 const toggleDomain = (domain) => {
                     if (selectedDomains.includes(domain)) {
@@ -2008,7 +2150,7 @@ BC (95%)`}
                 );
             };
 
-            // Aptitude Selector Component
+            // Aptitude Selector Component (keep existing)
             const AptitudeSelector = () => {
                 const toggleTopic = (topic) => {
                     if (selectedAptitudeTopics.includes(topic)) {
@@ -2119,7 +2261,7 @@ BC (95%)`}
                 );
             };
 
-            // Question Generator Component
+            // Question Generator Component (keep existing)
             const QuestionGenerator = () => {
                 return (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
@@ -2226,7 +2368,7 @@ BC (95%)`}
                 );
             };
 
-            // PYQ Upload Component
+            // PYQ Upload Component (keep existing)
             const PyqUpload = () => {
                 return (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
@@ -2260,6 +2402,7 @@ A. S3
 B. EC2
 C. AWS Regions and Availability Zones
 D. IAM
+E. Amazon CloudFront
 Correct Answer: C
 Community vote distribution
 C (98%)`}
@@ -2288,7 +2431,7 @@ C (98%)`}
                 );
             };
 
-            // PYQ Practice Selector Component
+            // PYQ Practice Selector Component (keep existing)
             const PyqPracticeSelector = () => {
                 return (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
@@ -2356,7 +2499,7 @@ C (98%)`}
                 );
             };
 
-            // Explanation Modal
+            // Explanation Modal (keep existing)
             const ExplanationModal = () => {
                 return (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -2383,7 +2526,7 @@ C (98%)`}
                 );
             };
 
-            // Login Handler
+            // Login Handler (keep existing)
             const handleLogin = (role) => {
                 if (userName.trim()) {
                     // Save student to JSON storage
@@ -2398,7 +2541,7 @@ C (98%)`}
                 }
             };
 
-            // Login Screen
+            // Login Screen (keep existing)
             if (!userRole) {
                 return (
                     <div className={`min-h-screen ${bgClass} flex items-center justify-center p-4 transition-all duration-500`}>
@@ -2420,7 +2563,7 @@ C (98%)`}
                                         type="text"
                                         value={userName}
                                         onChange={(e) => setUserName(e.target.value)}
-                                        placeholder="Enter your name"
+                                        placeholder="Soham Santosh Pawar"
                                         className={`w-full px-4 py-3 rounded-lg border-2 ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'} focus:border-blue-500 outline-none transition`}
                                     />
                                 </div>
@@ -2459,6 +2602,17 @@ C (98%)`}
                                 <div className="flex items-center justify-center space-x-2 text-green-600">
                                     <Database />
                                     <span className="text-sm">JSON Storage Ready</span>
+                                    <span className="text-sm">
+                                        Developed By @ <a
+                                            href="https://www.linkedin.com/in/sohampawar7030/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            Soham Pawar
+                                        </a>
+                                    </span>
+
                                 </div>
                             </div>
                         </div>
@@ -2466,7 +2620,7 @@ C (98%)`}
                 );
             }
 
-            // Teacher Dashboard
+            // Teacher Dashboard (keep existing)
             if (userRole === 'teacher') {
                 return (
                     <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
@@ -2504,7 +2658,7 @@ C (98%)`}
                 );
             }
 
-            // Student Interface - Show History Exam Review if selected
+            // Student Interface - Show History Exam Review if selected (keep existing)
             if (selectedHistoryExam) {
                 return (
                     <div className={`min-h-screen ${bgClass} transition-colors duration-300`}>
@@ -2817,11 +2971,29 @@ C (98%)`}
                                         <div className="flex justify-between items-center mb-6">
                                             <h3 className="text-xl font-bold">Question {currentQuestion + 1} of {questions.length}</h3>
                                             <div className="flex items-center space-x-2">
-                                                {questions[currentQuestion]?.isMultiSelect && (
-                                                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
-                                                        Multiple Answers
-                                                    </span>
-                                                )}
+                                                {(() => {
+                                                    const question = questions[currentQuestion];
+                                                    const correctAnswer = answers[currentQuestion] || '';
+
+                                                    // Enhanced multi-select detection for PYQ questions
+                                                    let isMultipleChoice = question.isMultiSelect;
+                                                    if (examType === 'pyq') {
+                                                        const correctAnswers = correctAnswer.split(',').map(a => a.trim()).filter(a => a);
+                                                        isMultipleChoice = correctAnswers.length > 1 ||
+                                                            question.question.toLowerCase().includes('choose two') ||
+                                                            question.question.toLowerCase().includes('choose three') ||
+                                                            question.question.toLowerCase().includes('select all') ||
+                                                            question.question.toLowerCase().includes('multiple answers');
+                                                    } else {
+                                                        isMultipleChoice = question.isMultiSelect || correctAnswer.split(',').filter(a => a.trim()).length > 1;
+                                                    }
+
+                                                    return isMultipleChoice ? (
+                                                        <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
+                                                            Multiple Answers
+                                                        </span>
+                                                    ) : null;
+                                                })()}
                                                 <button
                                                     onClick={() => toggleFlag(currentQuestion)}
                                                     className={`p-2 rounded-lg transition ${flaggedQuestions.has(currentQuestion) ? 'bg-yellow-500 text-white' : darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
@@ -2837,7 +3009,20 @@ C (98%)`}
                                             {questions[currentQuestion].options.map((option, idx) => {
                                                 const optionLetter = String.fromCharCode(65 + idx);
                                                 const correctAnswer = answers[currentQuestion] || '';
-                                                const isMulti = questions[currentQuestion].isMultiSelect || correctAnswer.split(',').filter(a => a.trim()).length > 1;
+
+                                                // Enhanced multi-select detection for PYQ questions
+                                                let isMulti = questions[currentQuestion].isMultiSelect;
+                                                if (examType === 'pyq') {
+                                                    const correctAnswers = correctAnswer.split(',').map(a => a.trim()).filter(a => a);
+                                                    isMulti = correctAnswers.length > 1 ||
+                                                        questions[currentQuestion].question.toLowerCase().includes('choose two') ||
+                                                        questions[currentQuestion].question.toLowerCase().includes('choose three') ||
+                                                        questions[currentQuestion].question.toLowerCase().includes('select all') ||
+                                                        questions[currentQuestion].question.toLowerCase().includes('multiple answers');
+                                                } else {
+                                                    isMulti = questions[currentQuestion].isMultiSelect || correctAnswer.split(',').filter(a => a.trim()).length > 1;
+                                                }
+
                                                 const userAnswer = userAnswers[currentQuestion] || '';
                                                 const isSelected = isMulti
                                                     ? userAnswer.split(',').map(a => a.trim()).includes(optionLetter)
@@ -2927,7 +3112,20 @@ C (98%)`}
                                                 const isAnswered = userAnswers[idx];
                                                 const isFlagged = flaggedQuestions.has(idx);
                                                 const isCurrent = idx === currentQuestion;
-                                                const isMultiSelect = q.isMultiSelect;
+
+                                                // Enhanced multi-select detection for PYQ questions
+                                                let isMultiSelect = q.isMultiSelect;
+                                                if (examType === 'pyq') {
+                                                    const correctAnswer = answers[idx] || '';
+                                                    const correctAnswers = correctAnswer.split(',').map(a => a.trim()).filter(a => a);
+                                                    isMultiSelect = correctAnswers.length > 1 ||
+                                                        q.question.toLowerCase().includes('choose two') ||
+                                                        q.question.toLowerCase().includes('choose three') ||
+                                                        q.question.toLowerCase().includes('select all') ||
+                                                        q.question.toLowerCase().includes('multiple answers');
+                                                } else {
+                                                    isMultiSelect = q.isMultiSelect;
+                                                }
 
                                                 return (
                                                     <button
@@ -2968,7 +3166,7 @@ C (98%)`}
                         )}
                     </div>
 
-                    {/* Stats Modal with Full History */}
+                    {/* Stats Modal with Full History (keep existing) */}
                     {showStats && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
                             <div className={`${cardClass} rounded-2xl p-8 max-w-4xl w-full shadow-2xl my-8`}>
@@ -3039,7 +3237,7 @@ C (98%)`}
                         </div>
                     )}
 
-                    {/* Confirm Submit Modal */}
+                    {/* Confirm Submit Modal (keep existing) */}
                     {showConfirmSubmit && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                             <div className={`${cardClass} rounded-2xl p-8 max-w-md w-full shadow-2xl transform scale-100 animate-pulse`}>
@@ -3082,25 +3280,25 @@ C (98%)`}
                         </div>
                     )}
 
-                    {/* Domain Selector Modal */}
+                    {/* Domain Selector Modal (keep existing) */}
                     {showDomainSelector && <DomainSelector />}
 
-                    {/* Aptitude Selector Modal */}
+                    {/* Aptitude Selector Modal (keep existing) */}
                     {showAptitudeSelector && <AptitudeSelector />}
 
-                    {/* Question Generator Modal */}
+                    {/* Question Generator Modal (keep existing) */}
                     {showQuestionGenerator && <QuestionGenerator />}
 
-                    {/* PYQ Upload Modal */}
+                    {/* PYQ Upload Modal (keep existing) */}
                     {showPyqUpload && <PyqUpload />}
 
-                    {/* PYQ Practice Selector Modal */}
+                    {/* PYQ Practice Selector Modal (keep existing) */}
                     {showPyqPractice && <PyqPracticeSelector />}
 
-                    {/* PYQ Question Count Selector Modal */}
+                    {/* PYQ Question Count Selector Modal (keep existing) */}
                     {showPyqQuestionCountSelector && <PyqQuestionCountSelector />}
 
-                    {/* Explanation Modal */}
+                    {/* Explanation Modal (keep existing) */}
                     {showExplanation && <ExplanationModal />}
                 </div>
             );
